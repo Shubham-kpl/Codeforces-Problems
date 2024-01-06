@@ -39,19 +39,20 @@ void solve()
     }
 
     sort(all(v));
-    ll ans = v[0];
-    f(i, 0, n - 2)
-    {
-        ans = min(ans, abs(v[i] - v[i + 1]));
-    }
     if (k == 1)
     {
+        ll ans = minv(v);
+        f(i, 0, n - 2)
+        {
+            ans = min(ans, abs(v[i] - v[i + 1]));
+        }
         cout << ans << endl;
         return;
     }
 
     if (k == 2)
     {
+        ll ans = minv(v);
 
         // Step 1: Brute force on all the possible differences
         f(i, 1, n - 1)
