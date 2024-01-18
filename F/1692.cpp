@@ -3,7 +3,7 @@
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
 * The code below is:
-* Coded on :  06/01/2023
+* Coded on : 09/01/2024
 * Coded by: Shubham Kandpal
 
 */
@@ -133,42 +133,37 @@ void solve()
     cin >> n;
 
     vi a(n);
-    f(I, 0, n - 1) cin >> a[I];
+    int x;
+    map<int, int> mp;
+    f(i, 0, n - 1) cin >> x, a[i] = (x % 10), mp[a[i]]++;
 
-    vector<pair<int, int>> v;
-
-    f(i, 0, n - 1) v.push_back({a[i], i});
-
-    sv(v);
-
-    vi p(n);
-    p[0] = v[0].first;
-    f(i, 1, n - 1) p[i] = p[i - 1] + v[i].first;
-
-    vi ans(n);
-
-    f(i, 0, n - 1)
+    vi ra;
+    for (auto i : mp)
     {
-        ll l = i + 1, r = n - 1, mid, cnt = i;
-        ll score = p[i];
-
-        while (l <= r)
+        int x = min(3, i.second);
+        while (x > 0)
         {
-            mid = (l + (r - l) / 2);
-            if (p[mid - 1] >= v[mid].first)
-            {
-                cnt = mid + 1;
-                l = mid + 1;
-            }
-            else
-                r = mid - 1;
+            --x;
+            ra.push_back(i.first);
         }
-        ans[v[i].second] = cnt;
     }
 
-    for (auto i : ans)
-        cout << i << " ";
-    cout << endl;
+    f(i, 0, ra.size() - 3)
+    {
+        f(j, 1, ra.size() - 2)
+        {
+            f(k, 2, ra.size() - 1)
+            {
+
+                if (!(i == j || j == k || k == i) && (ra[i] + ra[j] + ra[k]) % 10 == 3)
+                {
+                    cout << "YES" << endl;
+                    return;
+                }
+            }
+        }
+    }
+    cout << "NO" << endl;
 }
 
 int main()

@@ -3,7 +3,7 @@
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
 * The code below is:
-* Coded on :  06/01/2023
+* Coded on : 11/01/2024
 * Coded by: Shubham Kandpal
 
 */
@@ -132,43 +132,30 @@ void solve()
     ll n;
     cin >> n;
 
-    vi a(n);
-    f(I, 0, n - 1) cin >> a[I];
-
-    vector<pair<int, int>> v;
-
-    f(i, 0, n - 1) v.push_back({a[i], i});
-
-    sv(v);
-
-    vi p(n);
-    p[0] = v[0].first;
-    f(i, 1, n - 1) p[i] = p[i - 1] + v[i].first;
-
-    vi ans(n);
-
+    vector<vector<char>> a, b;
+    vector<string> s;
     f(i, 0, n - 1)
     {
-        ll l = i + 1, r = n - 1, mid, cnt = i;
-        ll score = p[i];
-
-        while (l <= r)
+        string str = "";
+        f(j, 0, n - 1)
         {
-            mid = (l + (r - l) / 2);
-            if (p[mid - 1] >= v[mid].first)
-            {
-                cnt = mid + 1;
-                l = mid + 1;
-            }
-            else
-                r = mid - 1;
+            cin >> a[i][j];
+            if (a[i][j] == 'X')
+                a[i][j] = '1';
+            str += (a[i][j]);
         }
-        ans[v[i].second] = cnt;
+        s.push_back(str);
     }
-
-    for (auto i : ans)
-        cout << i << " ";
-    cout << endl;
+    
+    f(i, 0, n - 1)
+    {
+        f(j, 0, n - 1)
+        {
+            cin >> b[i][j];
+            if (b[i][j] == 'X')
+                b[i][j] == '1';
+        }
+    }
 }
 
 int main()

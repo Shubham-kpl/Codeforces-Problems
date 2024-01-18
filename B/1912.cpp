@@ -3,7 +3,7 @@
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
 * The code below is:
-* Coded on :  06/01/2023
+* Coded on : 18/01/2024
 * Coded by: Shubham Kandpal
 
 */
@@ -131,44 +131,31 @@ void solve()
 {
     ll n;
     cin >> n;
+    string s;
+    cin >> s;
 
-    vi a(n);
-    f(I, 0, n - 1) cin >> a[I];
+    // So, we need to find the no. of distinct strings that can be formed if we either remove first or the second character
 
-    vector<pair<int, int>> v;
+    // Let say all elments are different
+    // Then the number would be:
+    // let n be the length
+    // the no. of distinct string would be n * (n + 1) / 2
 
-    f(i, 0, n - 1) v.push_back({a[i], i});
+    // Now, what is the case with alike letters in the string
 
-    sv(v);
+    // I think , I got it!!
 
-    vi p(n);
-    p[0] = v[0].first;
-    f(i, 1, n - 1) p[i] = p[i - 1] + v[i].first;
-
-    vi ans(n);
-
-    f(i, 0, n - 1)
+    ll ans = 1, curr = 1;
+    for (int i = 1; i < n; ++i)
     {
-        ll l = i + 1, r = n - 1, mid, cnt = i;
-        ll score = p[i];
-
-        while (l <= r)
+        if (s[i] == s[i - 1])
         {
-            mid = (l + (r - l) / 2);
-            if (p[mid - 1] >= v[mid].first)
-            {
-                cnt = mid + 1;
-                l = mid + 1;
-            }
-            else
-                r = mid - 1;
+            ans += curr;
         }
-        ans[v[i].second] = cnt;
+        else
+            ans += ++curr;
     }
-
-    for (auto i : ans)
-        cout << i << " ";
-    cout << endl;
+    cout << ans << endl;
 }
 
 int main()

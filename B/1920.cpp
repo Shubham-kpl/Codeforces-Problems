@@ -3,7 +3,7 @@
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
 * The code below is:
-* Coded on :  06/01/2023
+* Coded on : 17/01/2024
 * Coded by: Shubham Kandpal
 
 */
@@ -129,46 +129,49 @@ const ll mod = 1e9 + 7;
 /* DRIVER FUNCTION */
 void solve()
 {
-    ll n;
-    cin >> n;
+    ll n, x, k;
+    cin >> n >> x >> k;
 
-    vi a(n);
-    f(I, 0, n - 1) cin >> a[I];
-
-    vector<pair<int, int>> v;
-
-    f(i, 0, n - 1) v.push_back({a[i], i});
-
-    sv(v);
-
-    vi p(n);
-    p[0] = v[0].first;
-    f(i, 1, n - 1) p[i] = p[i - 1] + v[i].first;
-
-    vi ans(n);
-
+    vi a(n), psum(n);
+    ll sum = 0;
     f(i, 0, n - 1)
     {
-        ll l = i + 1, r = n - 1, mid, cnt = i;
-        ll score = p[i];
-
-        while (l <= r)
-        {
-            mid = (l + (r - l) / 2);
-            if (p[mid - 1] >= v[mid].first)
-            {
-                cnt = mid + 1;
-                l = mid + 1;
-            }
-            else
-                r = mid - 1;
-        }
-        ans[v[i].second] = cnt;
+        cin >> a[i];
+        sum += a[i];
+        psum[i] = sum;
     }
 
-    for (auto i : ans)
-        cout << i << " ";
-    cout << endl;
+    sv(a);
+
+    // kitno ko Alice hataega
+    ll mval = INT_MIN;
+    ll rsum = 0;
+    ll cnt = 0;
+    for (int i = 0; i <= x; ++i)
+    {
+        if (i > 0)
+            rsum += a[n - i];
+
+        // remaining
+        ll rem = n - i - min(n - i, k);
+
+        ll val;
+        if (rem == 0)
+            val = 0;
+        else
+            val = psum[rem - 1] - (psum[n - 1] - rsum - psum[rem - 1]);
+
+        if (mval < val)
+        {
+            mval = val;
+            cnt = i;
+        }
+    }
+
+    // pta chal gya ki Alice kitne hataega
+
+    // Ab bob ki baari
+    cout << mval << endl;
 }
 
 int main()

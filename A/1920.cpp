@@ -3,7 +3,7 @@
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
 * The code below is:
-* Coded on :  06/01/2023
+* Coded on : 17/01/2024
 * Coded by: Shubham Kandpal
 
 */
@@ -132,43 +132,32 @@ void solve()
     ll n;
     cin >> n;
 
-    vi a(n);
-    f(I, 0, n - 1) cin >> a[I];
-
-    vector<pair<int, int>> v;
-
-    f(i, 0, n - 1) v.push_back({a[i], i});
-
-    sv(v);
-
-    vi p(n);
-    p[0] = v[0].first;
-    f(i, 1, n - 1) p[i] = p[i - 1] + v[i].first;
-
-    vi ans(n);
-
+    ll a, x, mini = INT_MIN, maxi = INT_MAX;
+    set<ll> st;
     f(i, 0, n - 1)
     {
-        ll l = i + 1, r = n - 1, mid, cnt = i;
-        ll score = p[i];
+        cin >> a >> x;
 
-        while (l <= r)
+        if (a == 1)
         {
-            mid = (l + (r - l) / 2);
-            if (p[mid - 1] >= v[mid].first)
-            {
-                cnt = mid + 1;
-                l = mid + 1;
-            }
-            else
-                r = mid - 1;
+            mini = max(mini, x);
         }
-        ans[v[i].second] = cnt;
+        else if (a == 2)
+        {
+            maxi = min(maxi, x);
+        }
+        else
+            st.insert(x);
     }
 
-    for (auto i : ans)
-        cout << i << " ";
-    cout << endl;
+    ll cnt = 0;
+    for (auto i : st)
+    {
+        if (i >= mini && i <= maxi)
+            cnt++;
+    }
+
+    cout << max(maxi - mini - cnt + 1, 0LL) << endl;
 }
 
 int main()

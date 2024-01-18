@@ -3,7 +3,7 @@
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
 * The code below is:
-* Coded on :  06/01/2023
+* Coded on : 11/01/2024
 * Coded by: Shubham Kandpal
 
 */
@@ -129,46 +129,31 @@ const ll mod = 1e9 + 7;
 /* DRIVER FUNCTION */
 void solve()
 {
+
     ll n;
     cin >> n;
-
     vi a(n);
-    f(I, 0, n - 1) cin >> a[I];
+    f(i, 0, n - 1) cin >> a[i];
 
-    vector<pair<int, int>> v;
-
-    f(i, 0, n - 1) v.push_back({a[i], i});
-
-    sv(v);
-
-    vi p(n);
-    p[0] = v[0].first;
-    f(i, 1, n - 1) p[i] = p[i - 1] + v[i].first;
-
-    vi ans(n);
-
-    f(i, 0, n - 1)
+    ll mini = 0, maxi = 1e9;
+    f(i, 1, n - 1)
     {
-        ll l = i + 1, r = n - 1, mid, cnt = i;
-        ll score = p[i];
-
-        while (l <= r)
+        if (a[i] > a[i - 1]) // if current element is already greater than previous, we need to reduce the "maxi" value
         {
-            mid = (l + (r - l) / 2);
-            if (p[mid - 1] >= v[mid].first)
-            {
-                cnt = mid + 1;
-                l = mid + 1;
-            }
-            else
-                r = mid - 1;
+            maxi = min(maxi, (a[i] + a[i - 1]) / 2);
         }
-        ans[v[i].second] = cnt;
+        else if (a[i] < a[i - 1])
+        {
+            mini = max(mini, ((a[i] + a[i - 1]) % 2 == 0) ? ((a[i] + a[i - 1]) / 2) : ((a[i] + a[i - 1]) / 2 + 1));
+        }
+        if (maxi < mini)
+        {
+            cout << -1 << endl;
+            return;
+        }
     }
 
-    for (auto i : ans)
-        cout << i << " ";
-    cout << endl;
+    cout << (mini + maxi) / 2 << endl;
 }
 
 int main()

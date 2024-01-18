@@ -135,32 +135,39 @@ void solve()
     vi a(n);
     f(i, 0, n - 1) cin >> a[i];
 
-    ll s = 0, e = n - 1, cnt = 0;
+    ll s = 0, e = n - 1;
     ll prev = INT_MIN;
 
-    string str = "";
+    string str;
     while (s <= e)
     {
-        if (s == e)
+        vector<pair<int, char>> v;
+
+        if (a[s] > prev)
+            v.pb({a[s], 'L'});
+        if (a[e] > prev)
+            v.pb({a[e], 'R'});
+
+        sv(v);
+        if (v.size() == 2)
+            v.pop_back();
+        if (v.size() == 1)
         {
-            if (a[s] > prev)
-                str += "L";
-            break;
-        }
-        if (a[s] < a[e])
-        {
-            if (a[s] > prev)
-                str += "L", prev = a[s], s++;
+            if (v[0].second == 'L')
+            {
+                prev = a[s];
+                s++;
+                str += 'L';
+            }
             else
-                str += "R", prev = a[e], e--;
+            {
+                prev = a[e];
+                e--;
+                str += 'R';
+            }
         }
         else
-        {
-            if (a[e] > prev)
-                str += "R", prev = a[e], e--;
-            else
-                str += "L", prev = a[s], s++;
-        }
+            break;
     }
 
     cout << str.size() << endl
