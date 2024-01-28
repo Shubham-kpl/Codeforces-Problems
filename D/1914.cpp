@@ -3,7 +3,7 @@
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
 * The code below is:
-* Coded on : 25/01/2024
+* Coded on : 18/01/2024
 * Coded by: Shubham Kandpal
 
 */
@@ -129,17 +129,35 @@ const ll mod = 1e9 + 7;
 /* DRIVER FUNCTION */
 void solve()
 {
-    ll n, k;
-    cin >> n >> k;
+    ll n;
+    cin >> n;
 
-    if (k % (n - 1) == 0)
+    vi a(n), b(n), c(n);
+    vp ap, bp, cp;
+    f(i, 0, n - 1) cin >> a[i], ap.pb({a[i], i + 1});
+    f(i, 0, n - 1) cin >> b[i], bp.pb({b[i], i + 1});
+    f(i, 0, n - 1) cin >> c[i], cp.pb({c[i], i + 1});
+
+    sv(ap), sv(bp), sv(cp);
+    vi x(3), y(3), z(3);
+    ll ans = 0;
+    for (int i = n - 3; i < n; ++i)
     {
-        cout << n * (k / (n - 1)) - 1 << endl;
+        ll val = 0;
+        for (int j = n - 3; j < n; ++j)
+        {
+            if (ap[i].second != bp[j].second)
+            {
+                for (int k = n - 3; k < n; ++k)
+                {
+                    if (ap[i].second != cp[k].second && bp[j].second != cp[k].second)
+                        val = ap[i].first + bp[j].first + cp[k].first;
+                    ans = max(val, ans);
+                }
+            }
+        }
     }
-    else
-    {
-        cout << n * (k / (n - 1)) + (k % (n - 1)) << endl;
-    }
+    cout << ans << endl;
 }
 
 int main()

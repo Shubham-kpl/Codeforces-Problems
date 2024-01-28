@@ -3,7 +3,7 @@
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
 * The code below is:
-* Coded on : 25/01/2024
+* Coded on : 18/01/2024
 * Coded by: Shubham Kandpal
 
 */
@@ -129,17 +129,47 @@ const ll mod = 1e9 + 7;
 /* DRIVER FUNCTION */
 void solve()
 {
-    ll n, k;
-    cin >> n >> k;
+    ll n, k, d;
+    cin >> n >> k >> d;
 
-    if (k % (n - 1) == 0)
+    vi a(n), v(k);
+
+    f(i, 0, n - 1) cin >> a[i];
+    f(i, 0, k - 1) cin >> v[i];
+
+    // 0, k, 2k, 3k
+
+    // count the indices that are equal to their values (eq)
+    // count the indices that are one greater than their values (neq)
+
+    map<ll, ll> mp;
+    f(i, 1, n)
     {
-        cout << n * (k / (n - 1)) - 1 << endl;
+        if (i - a[i - 1] >= 0)
+        {
+            mp[i - a[i - 1]]++;
+        }
     }
-    else
+
+    // we've got mp
+
+    vector<pair<ll, ll>> xy;
+
+    for (auto i : mp)
+        xy.pb({i.second, i.first});
+
+    // svr(xy);
+    sort(xy.rbegin(), xy.rend());
+
+    for (auto i : xy)
     {
-        cout << n * (k / (n - 1)) + (k % (n - 1)) << endl;
+        if (i.second < d)
+        {
+            cout << i.first + (d - i.second - 1) / 2 << endl;
+            return;
+        }
     }
+    cout << (d - 1) / 2 << endl;
 }
 
 int main()

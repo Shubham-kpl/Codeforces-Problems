@@ -3,7 +3,7 @@
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
 * The code below is:
-* Coded on : 25/12/2023
+* Coded on : 18/01/2024
 * Coded by: Shubham Kandpal
 
 */
@@ -134,20 +134,30 @@ void solve()
     string s;
     cin >> s;
 
-    map<char, ll> mp;
-    mp[s[0]]++;
-    ll cnt = 1, ans = 1;
+    // So, we need to find the no. of distinct strings that can be formed if we either remove first or the second character
 
-    f(i, 1, n - 1)
+    // Let say all elments are different
+    // Then the number would be:
+    // let n be the length
+    // the no. of distinct string would be n * (n + 1) / 2
+
+    // Now, what is the case with alike letters in the string
+
+    // I think , I got it!!
+
+    ll ans = 0, curr = 0;
+    set<ll> st;
+    for (int i = 0; i < n; ++i)
     {
-        if (mp[s[i]] == 0)
+        if (st.find(s[i]) != st.end())
         {
-            cnt++;
-            mp[s[i]]++;
-            ans += pow(2, cnt - 1);
+            ans += curr;
         }
         else
-            ans += 1;
+        {
+            st.insert(s[i]);
+            ans += ++curr;
+        }
     }
     cout << ans << endl;
 }

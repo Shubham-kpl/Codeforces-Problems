@@ -3,7 +3,7 @@
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
 * The code below is:
-* Coded on : 25/01/2024
+* Coded on : 28/01/2024
 * Coded by: Shubham Kandpal
 
 */
@@ -14,7 +14,6 @@ using namespace std;
 /* MACROS */
 #define ll long long
 #define pb push_back
-#define mp make_pair
 #define all(x) x.begin(), x.end()
 #define pf(val) cout << val << endl;
 #define f(i, a, b) for (ll i = a; i <= b; ++i)
@@ -23,9 +22,9 @@ using namespace std;
 #define vvi vector<vector<ll>>
 #define vp vector<pair<ll, ll>>
 #define sv(v) sort(v.begin(), v.end())
-#define sa(a) sort(a, a + n)
-#define svr(v) sort(v.begin(), v.end(), greater<ll>())
+#define svr(v) sort(v.rbegin(), v.rend())
 #define rv(v) reverse(v.begin(), v.end())
+#define sa(a) sort(a, a + n)
 #define ra(a) reverse(a, a + n)
 #define max3(a, b, c) max(a, max(b, c))
 #define min3(a, b, c) min(a, min(b, c));
@@ -33,15 +32,8 @@ using namespace std;
 #define min4(a, b, c, d) min(a, min3(b, c, d))
 #define maxa(a) *max_element(a, a + n)
 #define mina(a) *min_element(a, a + n)
-#define maxv(a) *max_element(a.begin(), a.end())
-#define minv(a) *min_element(a.begin(), a.end())
-
-/**
-* SORT VECTOR PAIR BASED ON SECOND VALUE
-  std::sort(v.begin(), v.end(), [](auto &left, auto &right)
-[object Object]
-
-*/
+#define maxv(a) *max_element(all(a)
+#define minv(a) *min_element(all(a)
 
 // Sort map based on value
 bool cmp(pair<string, int> &a,
@@ -129,16 +121,50 @@ const ll mod = 1e9 + 7;
 /* DRIVER FUNCTION */
 void solve()
 {
-    ll n, k;
-    cin >> n >> k;
+    ll n, k, m;
+    cin >> n >> k >> m;
 
-    if (k % (n - 1) == 0)
+    string s;
+    cin >> s;
+
+    set<char> st;
+
+    string str = "";
+    f(i, 0, m - 1)
     {
-        cout << n * (k / (n - 1)) - 1 << endl;
+        st.insert(s[i]);
+
+        if (st.size() == k)
+        {
+            str += s[i];
+            st.clear();
+        }
+    }
+
+    if (str.size() >= n)
+    {
+        cout << "YES" << endl;
     }
     else
     {
-        cout << n * (k / (n - 1)) + (k % (n - 1)) << endl;
+        string al = "abcdefghijklmnopqrstuvwxyz";
+        string valid = al.substr(0, k);
+        for (auto i : valid)
+        {
+            if (st.find(i) == st.end())
+            {
+                cout << "NO" << endl;
+                cout << str;
+                ll j = 0;
+                while (str.size() + j < n)
+                {
+                    cout << i;
+                    j++;
+                }
+                cout << endl;
+                return;
+            }
+        }
     }
 }
 
@@ -156,4 +182,4 @@ int main()
         solve();
     }
     return 0;
-}
+}   

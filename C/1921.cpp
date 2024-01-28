@@ -3,7 +3,7 @@
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
 * The code below is:
-* Coded on : 25/01/2024
+* Coded on : 20/01/2024
 * Coded by: Shubham Kandpal
 
 */
@@ -129,17 +129,32 @@ const ll mod = 1e9 + 7;
 /* DRIVER FUNCTION */
 void solve()
 {
-    ll n, k;
-    cin >> n >> k;
+    ll n, f, a, b;
+    cin >> n >> f >> a >> b;
 
-    if (k % (n - 1) == 0)
+    vi m(n);
+    f(i, 0, n - 1) cin >> m[i];
+
+    ll ans = 0, mn = 0, mx;
+    f(i, 0, n - 1)
     {
-        cout << n * (k / (n - 1)) - 1 << endl;
+        mx = m[i];
+        if ((mx - mn) * a < b)
+        {
+            ans += ((mx - mn) * a);
+        }
+        else
+            ans += b;
+            mn= m[i];
     }
+
+    if (ans < f)
+        cout << "YES" << endl;
     else
-    {
-        cout << n * (k / (n - 1)) + (k % (n - 1)) << endl;
-    }
+        cout << "NO" << endl;
+
+    // 7 21 1 3
+    // 4 6 10 13 17 20 26
 }
 
 int main()

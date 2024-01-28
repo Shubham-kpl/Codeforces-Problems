@@ -129,17 +129,43 @@ const ll mod = 1e9 + 7;
 /* DRIVER FUNCTION */
 void solve()
 {
-    ll n, k;
-    cin >> n >> k;
 
-    if (k % (n - 1) == 0)
+    ll n;
+    cin >> n;
+    vi a(n);
+
+    f(i, 0, n - 1) cin >> a[i];
+
+    ll s = 0, e = n - 1;
+    ll cnt = 0;
+    ll prev = 0;
+    bool say = true;
+    ll av = 0, bv = 0;
+    while (s <= e)
     {
-        cout << n * (k / (n - 1)) - 1 << endl;
+        ll sum = 0;
+        if (say)
+        {
+            while (s <= e && sum <= prev)
+            {
+                sum += a[s++];
+            }
+            prev = sum;
+            av += sum;
+        }
+        else
+        {
+            while (s <= e && sum <= prev)
+            {
+                sum += a[e--];
+            }
+            prev = sum;
+            bv += sum;
+        }
+        cnt++;
+        say = !say;
     }
-    else
-    {
-        cout << n * (k / (n - 1)) + (k % (n - 1)) << endl;
-    }
+    cout << cnt << " " << av << " " << bv << endl;
 }
 
 int main()

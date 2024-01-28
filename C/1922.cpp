@@ -3,7 +3,7 @@
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
 * The code below is:
-* Coded on : 25/01/2024
+* Coded on : 21/01/2024
 * Coded by: Shubham Kandpal
 
 */
@@ -127,18 +127,79 @@ ll perm(ll n, ll r)
 const ll mod = 1e9 + 7;
 
 /* DRIVER FUNCTION */
-void solve()
+ll solve2(vvi &dp, vi a, ll x, ll y)
 {
-    ll n, k;
-    cin >> n >> k;
-
-    if (k % (n - 1) == 0)
+    // base case
+    if (x == 0 || y == 0)
     {
-        cout << n * (k / (n - 1)) - 1 << endl;
+        return 0;
+    }
+
+    // check
+    if (dp[x][y] != -1)
+        return dp[x][y];
+
+    // recursion
+
+    if (x > y)
+    {
+        if (x - y == 1)
+        {
+            dp[x][y] = a[x + 1] - a[x] > a[x] - a[x - 1] ? 1 : a[x] - a[x - 1];
+        }
+        else
+            dp[x][y] = solve2(dp, a, x, y + 1) + (a[y + 2] - a[y + 1] > a[y + 1] - a[y] ? 1 : a[y + 1] - a[y]);
     }
     else
     {
-        cout << n * (k / (n - 1)) + (k % (n - 1)) << endl;
+        if (y - x == 1)
+        {
+            dp[x][y] = a[x + 1] - a[x] < a[x] - a[x - 1] ? 1 : a[x + 1] - a[x];
+        }
+        else
+            dp[x][y] = solve2(dp, a, x + 1, y) + (a[x + 1] - a[x] < a[x] - a[x - 1] ? 1 : a[x + 1] - a[x]);
+    }
+    return dp[x][y];
+}
+
+void solve()
+{
+    ll n;
+    cin >> n;
+    vi a(n);
+    f(i, 0, n - 1) cin >> a[i];
+    vi l(n), r(n);
+
+    f(i, 1, n - 1)
+    {
+        if (i == 1)
+            l[i] = 1;
+        else
+            l[i] = l[i - 1] + (a[i] - a[i - 1] < a[i - 1] - a[i - 2] ? 1 : a[i] - a[i - 1]);
+    }
+    fr(i, n - 2, 0)
+    {
+        if (i == n - 2)
+            r[i] = 1;
+        else
+            r[i] = r[i + 1] + (a[i + 1] - a[i] < a[i + 2] - a[i + 1] ? 1 : a[i + 1] - a[i]);
+    }
+
+
+    ll m;
+    cin >> m;
+
+    ll x, y;
+    while(m > 0) {
+        cin >> x >> y;
+        --x, --y;
+        if(x < y) {
+            cout << l[y] - l[x] << endl;
+        }
+        else {
+            cout << r[y] - r[x] << endl;
+        }
+        --m;
     }
 }
 

@@ -132,46 +132,47 @@ void solve()
     ll n, x, k;
     cin >> n >> x >> k;
 
-    vi a(n), psum(n);
-    ll sum = 0;
+    vi a(n), pref(n), suff(n);
     f(i, 0, n - 1)
     {
         cin >> a[i];
-        sum += a[i];
-        psum[i] = sum;
     }
 
     sv(a);
 
-    // kitno ko Alice hataega
-    ll mval = INT_MIN;
-    ll rsum = 0;
-    ll cnt = 0;
-    for (int i = 0; i <= x; ++i)
+    ll sum = 0;
+    f(i, 0, n - 1)
     {
-        if (i > 0)
-            rsum += a[n - i];
-
-        // remaining
-        ll rem = n - i - min(n - i, k);
-
-        ll val;
-        if (rem == 0)
-            val = 0;
-        else
-            val = psum[rem - 1] - (psum[n - 1] - rsum - psum[rem - 1]);
-
-        if (mval < val)
-        {
-            mval = val;
-            cnt = i;
-        }
+        sum += a[i];
+        pref[i] = sum;
     }
 
-    // pta chal gya ki Alice kitne hataega
+    ll maxi = INT_MIN;
+    for (int i = 0; i <= x; ++i)
+    {
+        if (i == n)
+        {
+            if (maxi < 0)
+            {
+                maxi = 0;
+            }
+            continue;
+        }
+        ll bob = min(n - i, k);
+        ll rem = n - i - bob;
+        ll bobSum = pref[rem + bob - 1] - ((rem > 0) ? pref[rem - 1] : 0);
+        ll val = (rem > 0) ? pref[rem - 1] - bobSum : -bobSum;
 
-    // Ab bob ki baari
-    cout << mval << endl;
+        // cout << "val " << val << " ";
+
+        if (val > maxi)
+        {
+            maxi = val;
+        }
+    }
+    // cout << endl;
+
+    cout << maxi << endl;
 }
 
 int main()
