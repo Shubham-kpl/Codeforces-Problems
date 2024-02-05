@@ -134,25 +134,26 @@ void solve()
     cin >> n;
 
     vi a(n);
-    f(i, 0, n - 1) cin >> a[i];
-
-    // Brute force
-    vi pref(n);
-    ll sum = 0;
     f(i, 0, n - 1)
     {
-        sum += a[i];
-        pref[i] = a[i];
+        cin >> a[i];
     }
 
-    ll k = 2;
-    for (int k = 2; k < n; k++)
+    map<ll, ll> mp;
+    mp[0] = 1;
+    ll s = 0;
+    f(i, 0, n - 1)
     {
-        for (int j = 0; j < n; j++)
+        a[i] *= (i % 2 == 0) ? -1 : 1;
+        s += a[i];
+        if (mp[s])
         {
-            pref    
+            pf("YES");
+            return;
         }
+        ++mp[s];
     }
+    pf("NO");
 }
 
 int main()

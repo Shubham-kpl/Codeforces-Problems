@@ -13,128 +13,38 @@ using namespace std;
 
 /* MACROS */
 #define ll long long
-#define pb push_back
-#define mp make_pair
-#define f(i, n) for (ll i = 0; i < n; i++)
-#define vi vector<ll>
-#define vvi vector<vector<ll>>
-#define vp vector<pair<ll, ll>>
-#define sv(v) sort(v.begin(), v.end())
-#define sa(a) sort(a, a + n)
-#define svr(v) sort(v.begin(), v.end(), greater<ll>())
-#define rv(v) reverse(v.begin(), v.end())
-#define ra(a) reverse(a, a + n)
-#define max3(a, b, c) max(a, max(b, c))
-#define min3(a, b, c) min(a, min(b, c));
-#define max4(a, b, c, d) max(a, max3(b, c, d))
-#define min4(a, b, c, d) min(a, min3(b, c, d))
-#define maxa(a) *max_element(a, a + n)
-#define mina(a) *min_element(a, a + n)
-#define maxv(a) *max_element(a.begin(), a.end())
-#define minv(a) *min_element(a.begin(), a.end())
 
-/**
-* SORT VECTOR PAIR BASED ON SECOND VALUE
-  std::sort(v.begin(), v.end(), [](auto &left, auto &right)
-[object Object]
+map<ll, ll> mp;
 
-*/
-
-#define M 1000001
-
-/* NUMBER THEORY */
-ll gcd(ll a, ll b)
-{
-    return __gcd(a, b);
-}
-
-ll lcm(ll a, ll b)
-{
-    return (a / gcd(a, b)) * b;
-}
-
-/* SMALLEST PRIME FACTOR */
-int spf[M];
-void sieve()
-{
-    spf[1] = 1;
-    for (int i = 2; i < M; i++)
-        spf[i] = i;
-    for (int i = 4; i < M; i += 2)
-        spf[i] = 2;
-    for (int i = 3; i * i < M; i++)
-    {
-        if (spf[i] == i)
-        {
-            for (int j = i * i; j < M; j += i)
-                if (spf[j] == j)
-                    spf[j] = i;
-        }
-    }
-}
-
-/* PRIME FACTORISATION */
-void getFactorization(int x)
-{
-    while (x != 1)
-    {
-        x = x / spf[x];
-    }
-}
-
-/* COMINATORICS */
-ll fact(ll val)
-{
-    if (val == 0 || val == 1)
-        return 1;
-    return val * fact(val - 1);
-}
-
-ll cmb(ll n, ll r)
-{
-    return fact(n) / (fact(r) * fact(n - r));
-}
-
-ll perm(ll n, ll r)
-{
-    return cmb(n, r) * fact(r);
-}
-
-/* CONSTANTS */
-const ll mod = 1e9 + 7;
-
-/* DRIVER FUNCTION */
 void solve()
 {
-    int n;
+    ll n;
     cin >> n;
 
-    int l = 2, r = n, ans = -1, mid = (l + r) / 2;
-    while (l <= r)
-    {
-        if (mid * mid - mid + 1 == n)
-        {
-            cout << "YES" << endl;
-            return;
-        }
-        if (mid * mid - mid + 1 > n)
-            r = mid - 1;
-        else
-            l = mid + 1;
-        mid = (l + r) / 2;
-    }
-    cout << "NO" << endl;
+    if (mp.find(n) != mp.end())
+        cout << "YES" << endl;
+    else
+        cout << "NO" << endl;
 }
 
 int main()
 {
-    ios_base::sync_with_stdio(false);
-    cin.tie(0);
-    cout.tie(0);
-    // cout.precision(10);
-
     ll t;
     cin >> t;
+
+    for (ll i = 2; i <= 1e6; i++)
+    {
+        ll val = 1 + i + i * i;
+        mp[val] = 1;
+        ll z = i * i * i;
+        while (val + z <= 1e6)
+        {
+            val += z;
+            z *= i;
+            mp[val] = 1;
+        }
+    }
+
     while (t--)
     {
         solve();

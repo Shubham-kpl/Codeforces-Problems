@@ -134,26 +134,27 @@ void solve()
     cin >> n;
     vi a(n);
     f(i, 0, n - 1) cin >> a[i];
-
-    ll mini = 0, maxi = 1e9;
-    f(i, 1, n - 1)
+    ll mx = 1e9, mn = 0;
+    f(i, 0, n - 2)
     {
-        if (a[i] > a[i - 1]) // if current element is already greater than previous, we need to reduce the "maxi" value
+        if (a[i] > a[i + 1])
         {
-            maxi = min(maxi, (a[i] + a[i - 1]) / 2);
+            if ((a[i] + a[i + 1]) % 2 == 0)
+            {
+                mn = max(mn, (a[i] + a[i + 1]) / 2);
+            }
+            else
+                mn = max(mn, (a[i] + a[i + 1]) / 2 + 1);
         }
-        else if (a[i] < a[i - 1])
+        else if (a[i] < a[i + 1])
         {
-            mini = max(mini, ((a[i] + a[i - 1]) % 2 == 0) ? ((a[i] + a[i - 1]) / 2) : ((a[i] + a[i - 1]) / 2 + 1));
-        }
-        if (maxi < mini)
-        {
-            cout << -1 << endl;
-            return;
+            mx = min(mx, (a[i] + a[i + 1]) / 2);
         }
     }
-
-    cout << (mini + maxi) / 2 << endl;
+    if (mx < mn)
+        cout << -1 << endl;
+    else
+        cout << mn << endl;
 }
 
 int main()
@@ -170,4 +171,4 @@ int main()
         solve();
     }
     return 0;
-}
+}    

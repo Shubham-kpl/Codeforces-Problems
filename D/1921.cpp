@@ -129,25 +129,19 @@ const ll mod = 1e9 + 7;
 /* DRIVER FUNCTION */
 void solve()
 {
-
     ll n, m;
     cin >> n >> m;
-
     vi a(n), b(m);
-
     f(i, 0, n - 1) cin >> a[i];
-    f(j, 0, m - 1) cin >> b[j];
-
-    sv(a), sv(b);
-
-    ll ans = 0;
-    ll i1 = 0;  
-
-    while(i1 < n) {
-        ans += max(abs(b[m - i1 - 1] - a[i1]), abs(b[n - i1 - 1] - a[i1]));
-        i1++;
+    f(i, 0, m - 1) cin >> b[i];
+    sv(a);
+    sv(b);
+    ll res = 0;
+    f(i, 0, n - 1)
+    {
+        res += max(abs(b[m - i - 1] - a[i]), abs(a[i] - b[n - i - 1]));
     }
-    cout << ans << endl;
+    cout<<res<<endl;
 }
 
 int main()

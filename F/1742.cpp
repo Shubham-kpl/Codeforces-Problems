@@ -3,7 +3,7 @@
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
 * The code below is:
-* Coded on : 27/01/2024
+* Coded on : 29/01/2024
 * Coded by: Shubham Kandpal
 
 */
@@ -14,7 +14,6 @@ using namespace std;
 /* MACROS */
 #define ll long long
 #define pb push_back
-#define mp make_pair
 #define all(x) x.begin(), x.end()
 #define pf(val) cout << val << endl;
 #define f(i, a, b) for (ll i = a; i <= b; ++i)
@@ -23,9 +22,9 @@ using namespace std;
 #define vvi vector<vector<ll>>
 #define vp vector<pair<ll, ll>>
 #define sv(v) sort(v.begin(), v.end())
-#define sa(a) sort(a, a + n)
-#define svr(v) sort(v.begin(), v.end(), greater<ll>())
+#define svr(v) sort(v.rbegin(), v.rend())
 #define rv(v) reverse(v.begin(), v.end())
+#define sa(a) sort(a, a + n)
 #define ra(a) reverse(a, a + n)
 #define max3(a, b, c) max(a, max(b, c))
 #define min3(a, b, c) min(a, min(b, c));
@@ -33,22 +32,8 @@ using namespace std;
 #define min4(a, b, c, d) min(a, min3(b, c, d))
 #define maxa(a) *max_element(a, a + n)
 #define mina(a) *min_element(a, a + n)
-#define maxv(a) *max_element(a.begin(), a.end())
-#define minv(a) *min_element(a.begin(), a.end())
-
-/**
-* SORT VECTOR PAIR BASED ON SECOND VALUE
-  std::sort(v.begin(), v.end(), [](auto &left, auto &right)
-[object Object]
-
-*/
-
-// Sort map based on value
-bool cmp(pair<string, int> &a,
-         pair<string, int> &b)
-{
-    return a.second < b.second;
-}
+#define maxv(a) *max_element(all(a)
+#define minv(a) *min_element(all(a)
 
 #define M 1000001
 
@@ -129,103 +114,55 @@ const ll mod = 1e9 + 7;
 /* DRIVER FUNCTION */
 void solve()
 {
-    ll n, k, m;
-    cin >> n >> k >> m;
-
-    string s;
-    cin >> s;
-
-    map<char, ll> mp;
-
-    for (auto i : s)
+    ll q;
+    cin >> q;
+    ll d, k;
+    string x, a = "", b = "";
+    ll s1 = 1, s2 = 1, flag = 0;
+    while (q--)
     {
-        mp[i]++;
-    }
-
-    // insufficient length
-    for (auto i : mp)
-    {
-        if (i.second < n)
+        cin >> d >> k >> x;
+        if (d == 2 && (flag == 0||flag==2))
         {
-            cout << "NO" << endl;
-            f(j, 1, n) cout << i.first;
-            cout << endl;
-            return;
-        }
-    }
+            s2 += (k * x.size());
 
-    set<char> st;
-    for (auto i : s)
-        st.insert(i);
-
-    string str = "abcdefghijklmnopqrstuvwxyz";
-
-    string pt = str.substr(0, k);
-
-    // insufficient symbols
-    for (auto i : pt)
-    {
-        if (st.find(i) == st.end())
-        {
-            cout << "NO" << endl;
-            f(j, 1, n) cout << i;
-            cout << endl;
-            return;
-        }
-    }
-
-    // sufficient symbols as well as length
-    // now the problem can arise due to incorrect arrangement
-
-    set<char> st1;
-    f(i, 0, m - 1)
-    {
-        if (st1.find(s[i]) == st1.end())
-        {
-            st1.insert(s[i]);
-            map<char, ll> mp;
-            for (ll j = i + 1; j <= m - 1; j++)
+            for (auto i : x)
             {
-                mp[s[j]]++;
-            }
-            for (auto k : mp)
-            {
-                if (k.second < n - 1)
+                if (i != 'a')
                 {
-                    cout << "NO" << endl;
-                    cout << s[i];
-                    f(j, 2, n) cout << k.first;
-                    cout << endl;
-                    return;
+                    flag = 1;
+                    break;
                 }
             }
         }
-    }
-    set<char> st2;
-    fr(i, m - 1, 0)
-    {
-        if (st2.find(s[i]) == st2.end())
+        else
         {
-            st2.insert(s[i]);
-            map<char, ll> mp;
-            for (ll j = i - 1; j >= 0; j--)
+            s1 += (k * x.size());
+            for (auto i : x)
             {
-                mp[s[j]]++;
-            }
-            for (auto k : mp)
-            {
-                if (k.second < n - 1)
+                if (i != 'a' && flag == 0)
                 {
-                    cout << "NO" << endl;
-                    f(j, 2, n) cout << k.first;
-                    cout << s[i];   
-                    cout << endl;
-                    return;
+                    flag = 2;
+                    break;
                 }
             }
         }
+
+        // cout << "s1 " << s1 << " s2 " << s2 << endl;
+
+        if (flag == 1)
+        {
+            cout << "YES" << endl;
+        }
+        else if(flag==2)cout<<"NO"<<endl;
+        else
+        {
+            if (s1 >= s2)
+                cout << "NO" << endl;
+            else
+                cout << "YES" << endl;
+        }
     }
-    cout << "YES" << endl;
 }
 
 int main()

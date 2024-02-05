@@ -3,7 +3,7 @@
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
 * The code below is:
-* Coded on : 27/01/2024
+* Coded on : 04/02/2024
 * Coded by: Shubham Kandpal
 
 */
@@ -14,7 +14,6 @@ using namespace std;
 /* MACROS */
 #define ll long long
 #define pb push_back
-#define mp make_pair
 #define all(x) x.begin(), x.end()
 #define pf(val) cout << val << endl;
 #define f(i, a, b) for (ll i = a; i <= b; ++i)
@@ -23,9 +22,9 @@ using namespace std;
 #define vvi vector<vector<ll>>
 #define vp vector<pair<ll, ll>>
 #define sv(v) sort(v.begin(), v.end())
-#define sa(a) sort(a, a + n)
-#define svr(v) sort(v.begin(), v.end(), greater<ll>())
+#define svr(v) sort(v.rbegin(), v.rend())
 #define rv(v) reverse(v.begin(), v.end())
+#define sa(a) sort(a, a + n)
 #define ra(a) reverse(a, a + n)
 #define max3(a, b, c) max(a, max(b, c))
 #define min3(a, b, c) min(a, min(b, c));
@@ -33,22 +32,8 @@ using namespace std;
 #define min4(a, b, c, d) min(a, min3(b, c, d))
 #define maxa(a) *max_element(a, a + n)
 #define mina(a) *min_element(a, a + n)
-#define maxv(a) *max_element(a.begin(), a.end())
-#define minv(a) *min_element(a.begin(), a.end())
-
-/**
-* SORT VECTOR PAIR BASED ON SECOND VALUE
-  std::sort(v.begin(), v.end(), [](auto &left, auto &right)
-[object Object]
-
-*/
-
-// Sort map based on value
-bool cmp(pair<string, int> &a,
-         pair<string, int> &b)
-{
-    return a.second < b.second;
-}
+#define maxv(a) *max_element(all(a))
+#define minv(a) *min_element(all(a))
 
 #define M 1000001
 
@@ -129,103 +114,61 @@ const ll mod = 1e9 + 7;
 /* DRIVER FUNCTION */
 void solve()
 {
-    ll n, k, m;
-    cin >> n >> k >> m;
+    ll n;
+    cin >> n;
+    vi a(n);
+    f(i, 0, n - 1) cin >> a[i];
 
-    string s;
-    cin >> s;
-
-    map<char, ll> mp;
-
-    for (auto i : s)
+    vi even, odd;
+    ll ev = 0, od = 0;
+    fr(i, n - 1, 0)
     {
-        mp[i]++;
-    }
-
-    // insufficient length
-    for (auto i : mp)
-    {
-        if (i.second < n)
+        if (i % 2 == 0)
         {
-            cout << "NO" << endl;
-            f(j, 1, n) cout << i.first;
-            cout << endl;
-            return;
-        }
-    }
-
-    set<char> st;
-    for (auto i : s)
-        st.insert(i);
-
-    string str = "abcdefghijklmnopqrstuvwxyz";
-
-    string pt = str.substr(0, k);
-
-    // insufficient symbols
-    for (auto i : pt)
-    {
-        if (st.find(i) == st.end())
-        {
-            cout << "NO" << endl;
-            f(j, 1, n) cout << i;
-            cout << endl;
-            return;
-        }
-    }
-
-    // sufficient symbols as well as length
-    // now the problem can arise due to incorrect arrangement
-
-    set<char> st1;
-    f(i, 0, m - 1)
-    {
-        if (st1.find(s[i]) == st1.end())
-        {
-            st1.insert(s[i]);
-            map<char, ll> mp;
-            for (ll j = i + 1; j <= m - 1; j++)
+            if (a[i] > 0)
             {
-                mp[s[j]]++;
+                od += a[i];
+                odd.pb(od);
             }
-            for (auto k : mp)
+        }
+        else
+        {
+            if (a[i] > 0)
             {
-                if (k.second < n - 1)
-                {
-                    cout << "NO" << endl;
-                    cout << s[i];
-                    f(j, 2, n) cout << k.first;
-                    cout << endl;
-                    return;
-                }
+                ev += a[i];
+                even.pb(ev);
             }
         }
     }
-    set<char> st2;
-    fr(i, m - 1, 0)
+
+    svr(odd), svr(even);
+
+    ll n1 = odd.size(), n2 = even.size();
+
+    ll mx = 0;
+
+    f(i, 1, n)
     {
-        if (st2.find(s[i]) == st2.end())
+        ll sum = 0;
+        if (i % 2 == 0)
         {
-            st2.insert(s[i]);
-            map<char, ll> mp;
-            for (ll j = i - 1; j >= 0; j--)
-            {
-                mp[s[j]]++;
-            }
-            for (auto k : mp)
-            {
-                if (k.second < n - 1)
-                {
-                    cout << "NO" << endl;
-                    f(j, 2, n) cout << k.first;
-                    cout << s[i];   
-                    cout << endl;
-                    return;
-                }
-            }
+            if (i <= n2)
+                sum += even[i / 2];
+            if (i <= n1)
+                sum += odd[i / 2];
+            mx = max(mx, sum);
+        }
+        else
+        {
+            if (i <= n2)
+                sum += even[i / 2];
+            if (i <= n1)
+                sum += odd[i / 2];
+            mx = max(mx, (a[i - 1] < 0 ? a[i - 1] : 0) + sum);
         }
     }
-    cout << "YES" << endl;
+
+    cout << mx << endl;
 }
 
 int main()

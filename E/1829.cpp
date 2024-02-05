@@ -3,7 +3,7 @@
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
 * The code below is:
-* Coded on : 27/01/2024
+* Coded on : 28/01/2024
 * Coded by: Shubham Kandpal
 
 */
@@ -14,7 +14,6 @@ using namespace std;
 /* MACROS */
 #define ll long long
 #define pb push_back
-#define mp make_pair
 #define all(x) x.begin(), x.end()
 #define pf(val) cout << val << endl;
 #define f(i, a, b) for (ll i = a; i <= b; ++i)
@@ -23,9 +22,9 @@ using namespace std;
 #define vvi vector<vector<ll>>
 #define vp vector<pair<ll, ll>>
 #define sv(v) sort(v.begin(), v.end())
-#define sa(a) sort(a, a + n)
-#define svr(v) sort(v.begin(), v.end(), greater<ll>())
+#define svr(v) sort(v.rbegin(), v.rend())
 #define rv(v) reverse(v.begin(), v.end())
+#define sa(a) sort(a, a + n)
 #define ra(a) reverse(a, a + n)
 #define max3(a, b, c) max(a, max(b, c))
 #define min3(a, b, c) min(a, min(b, c));
@@ -33,22 +32,8 @@ using namespace std;
 #define min4(a, b, c, d) min(a, min3(b, c, d))
 #define maxa(a) *max_element(a, a + n)
 #define mina(a) *min_element(a, a + n)
-#define maxv(a) *max_element(a.begin(), a.end())
-#define minv(a) *min_element(a.begin(), a.end())
-
-/**
-* SORT VECTOR PAIR BASED ON SECOND VALUE
-  std::sort(v.begin(), v.end(), [](auto &left, auto &right)
-[object Object]
-
-*/
-
-// Sort map based on value
-bool cmp(pair<string, int> &a,
-         pair<string, int> &b)
-{
-    return a.second < b.second;
-}
+#define maxv(a) *max_element(all(a)
+#define minv(a) *min_element(all(a)
 
 #define M 1000001
 
@@ -127,105 +112,67 @@ ll perm(ll n, ll r)
 const ll mod = 1e9 + 7;
 
 /* DRIVER FUNCTION */
+bool check(ll i, ll j, ll n, ll m)
+{
+    if (i < 0 || j < 0 || i >= n || j >= m)
+        return 0;
+    return 1;
+}
+
+ll shubh(vvi &a, vvi &v, ll i, ll j)
+{
+    // base case
+    if (v[i][j] == 1 || a[i][j] == 0)
+    {
+        return 0;
+    }
+
+    // recursion
+    ll cnt = a[i][j];
+    v[i][j] = 1;
+    ll n = a.size(), m = a[0].size();
+    if (check(i + 1, j, n, m))
+    {
+        cnt += shubh(a, v, i + 1, j);
+    }
+    if (check(i - 1, j, n, m))
+    {
+        cnt += shubh(a, v, i - 1, j);
+    }
+    if (check(i, j + 1, n, m))
+    {
+        cnt += shubh(a, v, i, j + 1);
+    }
+    if (check(i, j - 1, n, m))
+    {
+        cnt += shubh(a, v, i, j - 1);
+    }
+    return cnt;
+}
+
 void solve()
 {
-    ll n, k, m;
-    cin >> n >> k >> m;
-
-    string s;
-    cin >> s;
-
-    map<char, ll> mp;
-
-    for (auto i : s)
+    ll n, m;
+    cin >> n >> m;
+    vvi a(n, vi(m));
+    f(i, 0, n - 1)
     {
-        mp[i]++;
+        f(j, 0, m - 1) cin >> a[i][j];
     }
 
-    // insufficient length
-    for (auto i : mp)
+    vvi v(n, vi(m, 0));
+    ll res = 0;
+    f(i, 0, n - 1)
     {
-        if (i.second < n)
+        f(j, 0, m - 1)
         {
-            cout << "NO" << endl;
-            f(j, 1, n) cout << i.first;
-            cout << endl;
-            return;
-        }
-    }
-
-    set<char> st;
-    for (auto i : s)
-        st.insert(i);
-
-    string str = "abcdefghijklmnopqrstuvwxyz";
-
-    string pt = str.substr(0, k);
-
-    // insufficient symbols
-    for (auto i : pt)
-    {
-        if (st.find(i) == st.end())
-        {
-            cout << "NO" << endl;
-            f(j, 1, n) cout << i;
-            cout << endl;
-            return;
-        }
-    }
-
-    // sufficient symbols as well as length
-    // now the problem can arise due to incorrect arrangement
-
-    set<char> st1;
-    f(i, 0, m - 1)
-    {
-        if (st1.find(s[i]) == st1.end())
-        {
-            st1.insert(s[i]);
-            map<char, ll> mp;
-            for (ll j = i + 1; j <= m - 1; j++)
+            if (a[i][j] || !v[i][j])
             {
-                mp[s[j]]++;
-            }
-            for (auto k : mp)
-            {
-                if (k.second < n - 1)
-                {
-                    cout << "NO" << endl;
-                    cout << s[i];
-                    f(j, 2, n) cout << k.first;
-                    cout << endl;
-                    return;
-                }
+                res = max(res, shubh(a, v, i, j));
             }
         }
     }
-    set<char> st2;
-    fr(i, m - 1, 0)
-    {
-        if (st2.find(s[i]) == st2.end())
-        {
-            st2.insert(s[i]);
-            map<char, ll> mp;
-            for (ll j = i - 1; j >= 0; j--)
-            {
-                mp[s[j]]++;
-            }
-            for (auto k : mp)
-            {
-                if (k.second < n - 1)
-                {
-                    cout << "NO" << endl;
-                    f(j, 2, n) cout << k.first;
-                    cout << s[i];   
-                    cout << endl;
-                    return;
-                }
-            }
-        }
-    }
-    cout << "YES" << endl;
+    pf(res);
 }
 
 int main()

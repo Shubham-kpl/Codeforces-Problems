@@ -3,7 +3,7 @@
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
 * The code below is:
-* Coded on : 22/01/2024
+* Coded on : 28/01/2024
 * Coded by: Shubham Kandpal
 
 */
@@ -14,7 +14,6 @@ using namespace std;
 /* MACROS */
 #define ll long long
 #define pb push_back
-#define mp make_pair
 #define all(x) x.begin(), x.end()
 #define pf(val) cout << val << endl;
 #define f(i, a, b) for (ll i = a; i <= b; ++i)
@@ -23,9 +22,9 @@ using namespace std;
 #define vvi vector<vector<ll>>
 #define vp vector<pair<ll, ll>>
 #define sv(v) sort(v.begin(), v.end())
-#define sa(a) sort(a, a + n)
-#define svr(v) sort(v.begin(), v.end(), greater<ll>())
+#define svr(v) sort(v.rbegin(), v.rend())
 #define rv(v) reverse(v.begin(), v.end())
+#define sa(a) sort(a, a + n)
 #define ra(a) reverse(a, a + n)
 #define max3(a, b, c) max(a, max(b, c))
 #define min3(a, b, c) min(a, min(b, c));
@@ -33,22 +32,8 @@ using namespace std;
 #define min4(a, b, c, d) min(a, min3(b, c, d))
 #define maxa(a) *max_element(a, a + n)
 #define mina(a) *min_element(a, a + n)
-#define maxv(a) *max_element(a.begin(), a.end())
-#define minv(a) *min_element(a.begin(), a.end())
-
-/**
-* SORT VECTOR PAIR BASED ON SECOND VALUE
-  std::sort(v.begin(), v.end(), [](auto &left, auto &right)
-[object Object]
-
-*/
-
-// Sort map based on value
-bool cmp(pair<string, int> &a,
-         pair<string, int> &b)
-{
-    return a.second < b.second;
-}
+#define maxv(a) *max_element(all(a)
+#define minv(a) *min_element(all(a)
 
 #define M 1000001
 
@@ -129,28 +114,10 @@ const ll mod = 1e9 + 7;
 /* DRIVER FUNCTION */
 void solve()
 {
-    ll n;
-    cin >> n;
-    vi a(n);
-    ll odd = 0, ev = 0;
-    f(i, 0, n - 1)
-    {
-        cin >> a[i];
-    }
-
-    ll it = 1, val;
-    set<ll> st;
-    while (it <= 60)
-    {
-        st.clear();
-        val = pow(2, it++);
-        f(i, 0, n - 1) { st.insert(a[i] % val); }
-        if (st.size() == 2)
-        {
-            cout << val << endl;
-            return;
-        }
-    }
+    ll n, m;
+    cin >> n >> m;
+   if((n*m)%3==0)cout <<n*m/3<<endl;
+   else cout<<n*m/3+1<<endl;
 }
 
 int main()

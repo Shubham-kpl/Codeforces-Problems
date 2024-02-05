@@ -135,40 +135,69 @@ void solve()
     vi a(n);
     f(I, 0, n - 1) cin >> a[I];
 
-    vector<pair<int, int>> v;
-
-    f(i, 0, n - 1) v.push_back({a[i], i});
-
+    // Method 2
+    vp v;
+    f(i, 0, n - 1) v.pb({a[i], i});
     sv(v);
-
-    vi p(n);
-    p[0] = v[0].first;
-    f(i, 1, n - 1) p[i] = p[i - 1] + v[i].first;
+    vi pref;
+    ll sum = 0;
+    for (auto i : v)
+    {
+        sum += i.first;
+        pref.pb(sum);
+    }
 
     vi ans(n);
-
+    ll j = 1, cnt = 0;
     f(i, 0, n - 1)
     {
-        ll l = i + 1, r = n - 1, mid, cnt = i;
-        ll score = p[i];
-
-        while (l <= r)
+        while (j < n && (v[j].first <= pref[j - 1]))
         {
-            mid = (l + (r - l) / 2);
-            if (p[mid - 1] >= v[mid].first)
-            {
-                cnt = mid + 1;
-                l = mid + 1;
-            }
-            else
-                r = mid - 1;
+            j++;
+            cnt++;
         }
         ans[v[i].second] = cnt;
     }
-
     for (auto i : ans)
+    {
         cout << i << " ";
+    }
     cout << endl;
+
+    // vector<pair<int, int>> v;
+
+    // f(i, 0, n - 1) v.push_back({a[i], i});
+
+    // sv(v);
+
+    // vi p(n);
+    // p[0] = v[0].first;
+    // f(i, 1, n - 1) p[i] = p[i - 1] + v[i].first;
+
+    // vi ans(n);
+
+    // f(i, 0, n - 1)
+    // {
+    //     ll l = i + 1, r = n - 1, mid, cnt = i;
+    //     ll score = p[i];
+
+    //     while (l <= r)
+    //     {
+    //         mid = (l + (r - l) / 2);
+    //         if (p[mid - 1] >= v[mid].first)
+    //         {
+    //             cnt = mid + 1;
+    //             l = mid + 1;
+    //         }
+    //         else
+    //             r = mid - 1;
+    //     }
+    //     ans[v[i].second] = cnt;
+    // }
+
+    // for (auto i : ans)
+    //     cout << i << " ";
+    // cout << endl;
 }
 
 int main()

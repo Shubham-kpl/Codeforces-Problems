@@ -3,7 +3,7 @@
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
 * The code below is:
-* Coded on : 07/12/2023
+* Coded on : 29/01/2024
 * Coded by: Shubham Kandpal
 
 */
@@ -14,17 +14,17 @@ using namespace std;
 /* MACROS */
 #define ll long long
 #define pb push_back
-#define mp make_pair
-#define f0(i, n) for (ll i = 0; i < n; i++)
-#define f1(i, n) for (ll i = 1; i < n; i++)
-#define fman(i, m, n) for (ll i = m; i < n; i++)
+#define all(x) x.begin(), x.end()
+#define pf(val) cout << val << endl;
+#define f(i, a, b) for (ll i = a; i <= b; ++i)
+#define fr(i, a, b) for (ll i = a; i >= b; --i)
 #define vi vector<ll>
 #define vvi vector<vector<ll>>
 #define vp vector<pair<ll, ll>>
 #define sv(v) sort(v.begin(), v.end())
-#define sa(a) sort(a, a + n)
-#define svr(v) sort(v.begin(), v.end(), greater<ll>())
+#define svr(v) sort(v.rbegin(), v.rend())
 #define rv(v) reverse(v.begin(), v.end())
+#define sa(a) sort(a, a + n)
 #define ra(a) reverse(a, a + n)
 #define max3(a, b, c) max(a, max(b, c))
 #define min3(a, b, c) min(a, min(b, c));
@@ -32,22 +32,8 @@ using namespace std;
 #define min4(a, b, c, d) min(a, min3(b, c, d))
 #define maxa(a) *max_element(a, a + n)
 #define mina(a) *min_element(a, a + n)
-#define maxv(a) *max_element(a.begin(), a.end())
-#define minv(a) *min_element(a.begin(), a.end())
-
-/**
-* SORT VECTOR PAIR BASED ON SECOND VALUE
-  std::sort(v.begin(), v.end(), [](auto &left, auto &right)
-[object Object]
-
-*/
-
-// Sort map based on value
-bool cmp(pair<string, int> &a,
-         pair<string, int> &b)
-{
-    return a.second < b.second;
-}
+#define maxv(a) *max_element(all(a))
+#define minv(a) *min_element(all(a))
 
 #define M 1000001
 
@@ -130,70 +116,63 @@ void solve()
 {
     ll n;
     cin >> n;
-
     vi a(n);
-    bool neg = true;
-    f0(i, n)
+    f(i, 0, n - 1) cin >> a[i];
+
+    bool ch = false;
+    f(i, 0, n - 1)
     {
-        cin >> a[i];
         if (a[i] > 0)
-            neg = false;
+        {
+            ch = true;
+            break;
+        }
     }
 
-    vp v;
-
-    // If all are negative
-    if (neg)
+    if (!ch)
     {
-        for (int i = n - 2; i >= 0; --i)
-        {
-            v.pb(make_pair(i + 1, i + 2));
-        }
-        cout << v.size() << endl;
-        for (auto i : v)
-        {
-            cout << i.first << " " << i.second << endl;
-        }
+        // no element is positive
+        cout << n - 1 << endl;
+        fr(i, n - 2, 0) cout << i + 1 << " " << i + 2 << endl;
         return;
-    }
-
-    // Else
-    ll maxi = maxv(a), idx = distance(a.begin(), max_element(a.begin(), a.end()));
-    if (a[0] > 0)
-    {
-        while (a[0] < 20)
-        {
-            a[0] += a[0];
-            v.pb(make_pair(1, 1));
-        }
     }
     else
     {
-        while (a[0] < 20)
+        vp v;
+        ll mx = INT_MIN;
+        ll idx = -1;
+        f(i, 0, n - 1)
         {
-            a[0] += maxi;
-            v.pb(make_pair(1, idx + 1));
-        }
-    }
-
-    f1(i, n)
-    {
-        if (a[i] < a[i - 1])
-        {
-            a[i] += a[i - 1];
-            v.pb(make_pair(i + 1, i));
-            if (a[i] < a[i - 1])
+            if (mx < a[i])
             {
-                a[i] += a[i - 1];
-                v.pb(make_pair(i + 1, i));
+                mx = a[i], idx = i + 1;
             }
         }
-    }
 
-    cout << v.size() << endl;
-    for (auto i : v)
-    {
-        cout << i.first << " " << i.second << endl;
+        while (a[idx - 1] < 20)
+        {
+            a[idx - 1] += a[idx - 1];
+            v.pb({idx, idx});
+        }
+
+        while (a[0] < 20)
+        {
+            a[0] += a[idx - 1];
+            v.pb({1, idx});
+        }
+
+        f(i, 1, n - 1)
+        {
+            v.pb({i + 1, i});
+            if (a[i] < 0)
+            {
+                v.pb({i + 1, i});
+            }
+        }
+
+        cout << v.size() << endl;
+        for (auto i : v)
+            cout << i.first << " " << i.second << endl;
     }
 }
 

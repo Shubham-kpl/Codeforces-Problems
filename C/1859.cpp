@@ -3,7 +3,7 @@
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
 * The code below is:
-* Coded on : 23/11/2023
+* Coded on : 04/03/2024
 * Coded by: Shubham Kandpal
 
 */
@@ -14,17 +14,17 @@ using namespace std;
 /* MACROS */
 #define ll long long
 #define pb push_back
-#define mp make_pair
-#define f0(i, n) for (ll i = 0; i < n; i++)
-#define f1(i, n) for (ll i = 1; i < n; i++)
-#define fman(i, m, n) for (ll i = m; i < n; i++)
+#define all(x) x.begin(), x.end()
+#define pf(val) cout << val << endl;
+#define f(i, a, b) for (ll i = a; i <= b; ++i)
+#define fr(i, a, b) for (ll i = a; i >= b; --i)
 #define vi vector<ll>
 #define vvi vector<vector<ll>>
 #define vp vector<pair<ll, ll>>
 #define sv(v) sort(v.begin(), v.end())
-#define sa(a) sort(a, a + n)
-#define svr(v) sort(v.begin(), v.end(), greater<ll>())
+#define svr(v) sort(v.rbegin(), v.rend())
 #define rv(v) reverse(v.begin(), v.end())
+#define sa(a) sort(a, a + n)
 #define ra(a) reverse(a, a + n)
 #define max3(a, b, c) max(a, max(b, c))
 #define min3(a, b, c) min(a, min(b, c));
@@ -32,22 +32,8 @@ using namespace std;
 #define min4(a, b, c, d) min(a, min3(b, c, d))
 #define maxa(a) *max_element(a, a + n)
 #define mina(a) *min_element(a, a + n)
-#define maxv(a) *max_element(a.begin(), a.end())
-#define minv(a) *min_element(a.begin(), a.end())
-
-/**
-* SORT VECTOR PAIR BASED ON SECOND VALUE
-  std::sort(v.begin(), v.end(), [](auto &left, auto &right)
-[object Object]
-
-*/
-
-// Sort map based on value
-bool cmp(pair<string, int> &a,
-         pair<string, int> &b)
-{
-    return a.second < b.second;
-}
+#define maxv(a) *max_element(all(a))
+#define minv(a) *min_element(all(a))
 
 #define M 1000001
 
@@ -91,6 +77,19 @@ void getFactorization(int x)
     }
 }
 
+/* Check if number is prime */
+bool isPrime(ll n)
+{
+    if (n == 2)
+        return true;
+    if (n == 1 || n % 2 == 0)
+        return 0;
+    for (int i = 2; i <= n / 2; ++i)
+        if (n % i == 0)
+            return 0;
+    return 1;
+}
+
 /* COMINATORICS */
 ll fact(ll val)
 {
@@ -115,38 +114,25 @@ const ll mod = 1e9 + 7;
 /* DRIVER FUNCTION */
 void solve()
 {
-    int n;
+    ll n;
     cin >> n;
+    vi a(n + 1);
+    f(i, 1, n) a[i] = i;
 
-    ll val = 0;
-    for (int j = n; j >= 1; --j) // fixing the maximum element
+    ll mx = 0;
+    fr(i, n, 1)
     {
         ll sum = 0;
-
-        // set to check if a position is occupied or not
-        set<int> occ;
-        occ.insert(j);
-
-        // loop to iterate over all other values except the max element
-        for (int k = n - 1; k >= 1; --k)
+        sum += ((i * (i + 1) * (2 * i + 1) / 6));
+        ll val = i * i;
+        for (int k = i + 1; k <= n; k++)
         {
-            // different positions starting from "n" to "1"
-            for (int l
-            {
-                if (occ.find(l) == occ.end())
-                {
-                    if (k * l <= n * j)
-                    {
-                        occ.insert(l);
-                        sum += (k * l);
-                        break;
-                    }
-                }
-            }
+            val = max(val, a[n - k + i + 1] * k);
+            sum += a[n - k + i + 1] * k;
         }
-        if(flag == 0) val = max(val, sum);
+        mx = max(sum - val, mx);
     }
-    cout << val << endl;
+    cout << mx << endl;
 }
 
 int main()

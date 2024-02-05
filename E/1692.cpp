@@ -3,7 +3,7 @@
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
 * The code below is:
-* Coded on : 09/01/2024
+* Coded on : 29/01/2024
 * Coded by: Shubham Kandpal
 
 */
@@ -14,7 +14,6 @@ using namespace std;
 /* MACROS */
 #define ll long long
 #define pb push_back
-#define mp make_pair
 #define all(x) x.begin(), x.end()
 #define pf(val) cout << val << endl;
 #define f(i, a, b) for (ll i = a; i <= b; ++i)
@@ -23,9 +22,9 @@ using namespace std;
 #define vvi vector<vector<ll>>
 #define vp vector<pair<ll, ll>>
 #define sv(v) sort(v.begin(), v.end())
-#define sa(a) sort(a, a + n)
-#define svr(v) sort(v.begin(), v.end(), greater<ll>())
+#define svr(v) sort(v.rbegin(), v.rend())
 #define rv(v) reverse(v.begin(), v.end())
+#define sa(a) sort(a, a + n)
 #define ra(a) reverse(a, a + n)
 #define max3(a, b, c) max(a, max(b, c))
 #define min3(a, b, c) min(a, min(b, c));
@@ -33,22 +32,8 @@ using namespace std;
 #define min4(a, b, c, d) min(a, min3(b, c, d))
 #define maxa(a) *max_element(a, a + n)
 #define mina(a) *min_element(a, a + n)
-#define maxv(a) *max_element(a.begin(), a.end())
-#define minv(a) *min_element(a.begin(), a.end())
-
-/**
-* SORT VECTOR PAIR BASED ON SECOND VALUE
-  std::sort(v.begin(), v.end(), [](auto &left, auto &right)
-[object Object]
-
-*/
-
-// Sort map based on value
-bool cmp(pair<string, int> &a,
-         pair<string, int> &b)
-{
-    return a.second < b.second;
-}
+#define maxv(a) *max_element(all(a))
+#define minv(a) *min_element(all(a))
 
 #define M 1000001
 
@@ -129,47 +114,47 @@ const ll mod = 1e9 + 7;
 /* DRIVER FUNCTION */
 void solve()
 {
-    ll n, s;
-    cin >> n >> s;
-    vi a(n), p(n);
-    f(i, 0, n - 1) cin >> a[i];
-    p[0] = a[0];
-    f(i, 1, n - 1) p[i] = p[i - 1] + a[i];
-
-    if (p[n - 1] == s)
+    ll n, k;
+    cin >> n >> k;
+    vi a(n);
+    ll s = 0;
+    f(i, 0, n - 1) cin >> a[i], s += a[i];
+    if (s == k)
     {
-        pf(0);
+        cout << 0 << endl;
         return;
     }
-    if (p[n - 1] < s)
+    if (s < k)
     {
-        pf(-1);
+        cout << -1 << endl;
         return;
     }
+    vi p(n + 1);
+    f(i, 0, n - 1) p[i + 1] = p[i] + a[i];
 
-    ll mini = INT_MAX;
-    f(i, 0, n)
+    vi pn(s + 1);
+    f(i, 0, n - 1) pn[p[i]] = i;
+
+    ll res = INT_MAX;
+    f(i, a[0], s)
     {
-        ll l = i, r = n - 1, mid, ans = -1;
+        ll val = k - i - 1;
+        ll l = pn[i], r = n - 1, mid, ans = -1;
         while (l <= r)
         {
-            mid = l + (r - l) / 2;
-            if (p[mid] - (i ? p[i - 1] : 0) > s)
+            mid = (l + r) / 2;
+            if (a[i] >= i + k - 1)
             {
+                ans = mid;
                 r = mid - 1;
             }
             else
-            {
-                if (p[mid] - (i ? p[i - 1] : 0) == s)
-                    ans = n - (mid - i + 1);
                 l = mid + 1;
-            }
         }
-        if (ans == -1)
-            continue;
-        mini = min(mini, ans);
+        if (ans != -1)
+            res = min(res, ans);
     }
-    cout << mini << endl;
+    cout << res << endl;
 }
 
 int main()
