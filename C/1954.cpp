@@ -115,63 +115,30 @@ const ll mod = 1e9 + 7;
 void solve()
 {
 
-    ll n;
-    cin >> n;
-    vi a(n), b(n), c(n);
+    string x, y;
+    cin >> x >> y;
 
-    f(i, 0, n - 1) cin >> a[i];
-    f(i, 0, n - 1) cin >> b[i];
-    f(i, 0, n - 1) cin >> c[i];
+    int n = x.size();
 
-    // stack<int> st;
+    bool flag = false;
 
-    // multimap<int, int> mp;
-
-    // f(i, 0, n - 1) mp.insert({a[i], 1});
-    // f(i, 0, n - 1) mp.insert({b[i], 2});
-
-    // vi d;
-    // for (auto i : mp)
-    // {
-    //     if (i.second == 1)
-    //     {
-    //         st.push(i.first);
-    //     }
-    //     else
-    //     {
-    //         d.push_back(i.first - st.top());
-    //         st.pop();
-    //     }
-    // }
-
-    // svr(d);
-    // sv(c);
-
-    // ll ans = 0;
-    // f(i, 0, n - 1) ans += d[i] * c[i];
-    // cout << ans << endl;
-
-    set<int> st;
-
-    for (auto i : a)
-        st.insert(i);
-
-    ll ans = 0;
-    vi d;
     f(i, 0, n - 1)
     {
-        auto it = lower_bound(st.begin(), st.end(), b[i]);
-        if (it != st.begin())
-            --it;
-        // cout << "val " << *(it) << endl;
-        d.pb(b[i] - *(it));
-        st.erase(it);
+        if (x[i] != y[i] && !flag)
+        {
+            if (x[i] < y[i])
+                swap(x[i], y[i]);
+            flag = true;
+        }
+
+        else
+        {
+            if (x[i] > y[i])
+                swap(x[i], y[i]);
+        }
     }
 
-    sv(d);
-    svr(c);
-    f(i, 0, n - 1) ans += d[i] * c[i];
-    cout << ans << endl;
+    cout << x << " " << y << endl;
 }
 
 int main()

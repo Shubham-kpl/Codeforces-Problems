@@ -3,7 +3,7 @@
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
 * The code below is:
-* Coded on : 20/04/2024
+* Coded on : 09/04/2024
 * Coded by: Shubham Kandpal
 
 */
@@ -117,61 +117,62 @@ void solve()
 
     ll n;
     cin >> n;
-    vi a(n), b(n), c(n);
+    char s;
+    cin >> s;
 
-    f(i, 0, n - 1) cin >> a[i];
-    f(i, 0, n - 1) cin >> b[i];
-    f(i, 0, n - 1) cin >> c[i];
+    string str = "CDHS";
 
-    // stack<int> st;
+    int trump = str.find(s);
+    vector<string> arr[4];
 
-    // multimap<int, int> mp;
-
-    // f(i, 0, n - 1) mp.insert({a[i], 1});
-    // f(i, 0, n - 1) mp.insert({b[i], 2});
-
-    // vi d;
-    // for (auto i : mp)
-    // {
-    //     if (i.second == 1)
-    //     {
-    //         st.push(i.first);
-    //     }
-    //     else
-    //     {
-    //         d.push_back(i.first - st.top());
-    //         st.pop();
-    //     }
-    // }
-
-    // svr(d);
-    // sv(c);
-
-    // ll ans = 0;
-    // f(i, 0, n - 1) ans += d[i] * c[i];
-    // cout << ans << endl;
-
-    set<int> st;
-
-    for (auto i : a)
-        st.insert(i);
-
-    ll ans = 0;
-    vi d;
-    f(i, 0, n - 1)
+    f(i, 0, 2 * n - 1)
     {
-        auto it = lower_bound(st.begin(), st.end(), b[i]);
-        if (it != st.begin())
-            --it;
-        // cout << "val " << *(it) << endl;
-        d.pb(b[i] - *(it));
-        st.erase(it);
+        string s;
+        cin >> s;
+        arr[str.find(s[1])].push_back(s);
     }
 
-    sv(d);
-    svr(c);
-    f(i, 0, n - 1) ans += d[i] * c[i];
-    cout << ans << endl;
+    vector<string> rem;
+    vector<string> ans;
+
+    for (int i = 0; i < 4; i++)
+    {
+        if (i == trump)
+            continue;
+
+        if (arr[i].size() % 2 != 0)
+        {
+            rem.push_back(arr[i].back());
+            arr[i].pop_back();
+        }
+        for (auto j : arr[i])
+        {
+            ans.push_back(j);
+        }
+    }
+
+    if (rem.size() > arr[trump].size())
+    {
+        cout << "IMPOSSIBLE" << endl;
+        return;
+    }
+    else
+    {
+        for (int i = 0; i < rem.size(); i++)
+        {
+            ans.push_back(rem[i]);
+            ans.push_back(arr[trump][i]);
+        }
+
+        for (int i = rem.size(); i < arr[trump].size(); i++)
+        {
+            ans.push_back(arr[trump][i]);
+        }
+    }
+
+    for (auto i : ans)
+        cout << i << " ";
+    cout << endl;
 }
 
 int main()

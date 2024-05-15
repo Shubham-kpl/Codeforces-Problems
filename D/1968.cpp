@@ -1,7 +1,7 @@
 /**
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
-* Coded on: 07-05-2024 17:39:52
+* Coded on: 08-05-2024 06:47:04
 * Coded by: Shubham Kandpal
 */
 
@@ -38,76 +38,60 @@ using namespace std;
 const ll mod = 1e9 + 7;
 
 /* DRIVER FUNCTION */
-map<int, vector<int>> adj;
-vector<int> visited(100001);
-vector<int> dp(100001);
-vector<vector<int>> g;
-vector<int> cnt;
-
-void dfs(int u, int v)
-{
-    if (adj[v][0] = u && adj[v].size() == 1)
-    {
-        cnt.push_back(v);
-    }
-
-    else
-    {
-        for (auto i : adj[v])
-        {
-            if (i != u)
-            {
-                dfs(v, i);
-            }
-        }
-        cnt.push_back(v);
-    }
-}
-
-int bfs(int v)
-{
-    // if visited, return 0
-    if (visited[v] == 1)
-        return 0;
-
-    // else
-    visited[v] = 1;
-    int cnt = 1;
-    for (auto i : adj[v])
-    {
-        cnt += bfs(i);
-    }
-    return dp[v] = cnt;
-}
-
 void solve()
 {
-    int n;
-    cin >> n;
-    f(i, 0, n - 2)
+
+    ll n, k, bob, sas;
+    cin >> n >> k >> bob >> sas;
+
+    vector<ll> p(n + 1), a(n + 1);
+
+    f(i, 1, n)
     {
-        int x, y;
-        cin >> x >> y;
-        adj[x].push_back(y);
-        adj[y].push_back(x);
+        cin >> p[i];
     }
+    f(i, 1, n) cin >> a[i];
 
-    // bfs(1);
-    dfs(1, -1);
-
-    for (auto i : cnt)
-        cout << i << " " << endl;
-
-    int q;
-    cin >> q;
-    f(i, 0, q - 1)
+    // this function calculates maximum score
+    auto score = [&](ll idx, ll k)
     {
-        int x, y;
-        cin >> x >> y;
-    }
+        // create a set to check if index is already parsed
+        vector<bool> check(n + 1, false);
 
-    f(i, 1, n) cout << dp[i] << " ";
-    cout << endl;
+        // create a ans variable to keep maximum sum
+        ll ans = 0;
+        ll final_ans = 0;
+        ll cnt = 1;
+
+        // run until cnt is less than k and "i" is not yet traversed
+        while (cnt <= k && check[idx] == false)
+        {
+            check[idx] = true;
+
+            ans += a[idx];
+
+            // for each index, increment the value of ans, if it is optimal to chose all the remaining values as the a[index]
+            ll temp = ans + (k - cnt) * a[idx];
+
+            // change idx to p[idx] for next iteration
+            idx = p[idx];
+            final_ans = max(final_ans, temp);
+            cnt++;
+        }
+        return final_ans;
+    };
+
+    ll bobS = score(bob, k);
+    ll sasS = score(sas, k);
+
+    // cout << bobS << " " << sasS << endl;
+
+    if (bobS > sasS)
+        cout << "Bodya" << endl;
+    else if (sasS > bobS)
+        cout << "Sasha" << endl;
+    else
+        cout << "Draw" << endl;
 }
 
 int main()

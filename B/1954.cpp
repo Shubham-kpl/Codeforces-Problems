@@ -114,64 +114,73 @@ const ll mod = 1e9 + 7;
 /* DRIVER FUNCTION */
 void solve()
 {
-
-    ll n;
+    int n;
     cin >> n;
-    vi a(n), b(n), c(n);
 
+    vi a(n);
     f(i, 0, n - 1) cin >> a[i];
-    f(i, 0, n - 1) cin >> b[i];
-    f(i, 0, n - 1) cin >> c[i];
 
-    // stack<int> st;
+    // int i = 0, j = n - 1;
 
-    // multimap<int, int> mp;
-
-    // f(i, 0, n - 1) mp.insert({a[i], 1});
-    // f(i, 0, n - 1) mp.insert({b[i], 2});
-
-    // vi d;
-    // for (auto i : mp)
+    // // remove elements from begin
+    // while (i <= n - 1)
     // {
-    //     if (i.second == 1)
+    //     if (a[i] != a[n - 1])
+    //         break;
+    //     else
+    //         i++;
+    // }
+
+    // // from end
+    // while (j >= 0)
+    // {
+    //     if (a[j] != a[0])
     //     {
-    //         st.push(i.first);
+    //         break;
     //     }
     //     else
+    //         j--;
+    // }
+
+    // // from mid
+    // int prev = 0, ans = INT_MAX;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     if (a[i] != a[0])
     //     {
-    //         d.push_back(i.first - st.top());
-    //         st.pop();
+    //         if (prev == 0)
+    //             prev = i;
+    //         else
+    //             ans = min(ans, i - prev - 1);
     //     }
     // }
 
-    // svr(d);
-    // sv(c);
+    // if (i == n)
+    // {
+    //     cout << -1 << endl;
+    //     return;
+    // }
 
-    // ll ans = 0;
-    // f(i, 0, n - 1) ans += d[i] * c[i];
-    // cout << ans << endl;
+    // cout << min(ans, min(i, n - j - 1)) << endl;
 
-    set<int> st;
+    ll prev = -1;
+    ll ans = n;
 
-    for (auto i : a)
-        st.insert(i);
-
-    ll ans = 0;
-    vi d;
     f(i, 0, n - 1)
     {
-        auto it = lower_bound(st.begin(), st.end(), b[i]);
-        if (it != st.begin())
-            --it;
-        // cout << "val " << *(it) << endl;
-        d.pb(b[i] - *(it));
-        st.erase(it);
+        if (a[i] != a[0])
+        {
+            ans = min(ans, i - prev - 1);
+            prev = i;
+        }
     }
 
-    sv(d);
-    svr(c);
-    f(i, 0, n - 1) ans += d[i] * c[i];
-    cout << ans << endl;
+    if (ans == n)
+    {
+        cout << -1 << endl;
+    }
+    else
+        cout << min(n - prev - 1, ans) << endl;
 }
 
 int main()

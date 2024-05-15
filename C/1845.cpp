@@ -1,7 +1,7 @@
 /**
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
-* Coded on: 07-05-2024 17:39:52
+* Coded on: 05-05-2024 22:23:41
 * Coded by: Shubham Kandpal
 */
 
@@ -13,9 +13,9 @@ using namespace std;
 #define pb push_back
 #define all(x) x.begin(), x.end()
 #define pf(val) cout << val << endl;
-#define f(i, a, b) for (ll i = a; i <= b; ++i)
+#define f(i, a, b) for (int i = a; i <= b; ++i)
 #define fr(i, a, b) for (ll i = a; i >= b; --i)
-#define vi vector<ll>
+#define vi vector<int>
 #define vvi vector<vector<ll>>
 #define vp vector<pair<ll, ll>>
 #define sv(v) sort(v.begin(), v.end())
@@ -38,76 +38,50 @@ using namespace std;
 const ll mod = 1e9 + 7;
 
 /* DRIVER FUNCTION */
-map<int, vector<int>> adj;
-vector<int> visited(100001);
-vector<int> dp(100001);
-vector<vector<int>> g;
-vector<int> cnt;
 
-void dfs(int u, int v)
+int check(int idx, int val, string s)
 {
-    if (adj[v][0] = u && adj[v].size() == 1)
+    int i = idx;
+    while (i < s.size())
     {
-        cnt.push_back(v);
+        if (s[i] == val)
+            return i;
+        i++;
     }
-
-    else
-    {
-        for (auto i : adj[v])
-        {
-            if (i != u)
-            {
-                dfs(v, i);
-            }
-        }
-        cnt.push_back(v);
-    }
-}
-
-int bfs(int v)
-{
-    // if visited, return 0
-    if (visited[v] == 1)
-        return 0;
-
-    // else
-    visited[v] = 1;
-    int cnt = 1;
-    for (auto i : adj[v])
-    {
-        cnt += bfs(i);
-    }
-    return dp[v] = cnt;
+    return INT_MAX;
 }
 
 void solve()
 {
-    int n;
-    cin >> n;
-    f(i, 0, n - 2)
+    string s;
+    cin >> s;
+    int n = s.size();
+
+    int m;
+    cin >> m;
+    string l, r;
+    cin >> l >> r;
+
+    // check for each value in between l[i] to r[i], which value's first occurence occurs in the most right, that will be our choice
+
+    int mx = 0;
+    int idx = 0;
+    f(i, 0, m - 1)
     {
-        int x, y;
-        cin >> x >> y;
-        adj[x].push_back(y);
-        adj[y].push_back(x);
+        f(val, l[i], r[i])
+        {
+            int ans = check(idx, val, s);
+            if (ans == INT_MAX)
+            {
+                cout << "YES" << endl;
+                return;
+            }
+            mx = max(mx, ans);
+        }
+        idx = mx + 1;
     }
 
-    // bfs(1);
-    dfs(1, -1);
-
-    for (auto i : cnt)
-        cout << i << " " << endl;
-
-    int q;
-    cin >> q;
-    f(i, 0, q - 1)
-    {
-        int x, y;
-        cin >> x >> y;
-    }
-
-    f(i, 1, n) cout << dp[i] << " ";
-    cout << endl;
+    cout << "NO" << endl;
 }
 
 int main()

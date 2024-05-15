@@ -3,7 +3,7 @@
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
 * The code below is:
-* Coded on : 20/04/2024
+* Coded on : 18/04/2024
 * Coded by: Shubham Kandpal
 
 */
@@ -114,64 +114,79 @@ const ll mod = 1e9 + 7;
 /* DRIVER FUNCTION */
 void solve()
 {
+    ll n, m, k;
+    cin >> n >> m >> k;
 
-    ll n;
-    cin >> n;
-    vi a(n), b(n), c(n);
+    vi a(n);
 
     f(i, 0, n - 1) cin >> a[i];
-    f(i, 0, n - 1) cin >> b[i];
-    f(i, 0, n - 1) cin >> c[i];
 
-    // stack<int> st;
+    sort(all(a));
 
-    // multimap<int, int> mp;
+    ll num, tax = 0, ans = 0;
 
-    // f(i, 0, n - 1) mp.insert({a[i], 1});
-    // f(i, 0, n - 1) mp.insert({b[i], 2});
+    f(i, 0, n - 1)
+    {
+        num = min(m, k);
+        ans += ((a[i] + tax) * num);
+        tax += num;
+        k -= num;
+    }
 
-    // vi d;
+    cout << ans << endl;
+
+    // ll cnt = (k / m) + (k % m != 0);
+
+    // multimap<ll, ll> mp, mpi;
+    // vi a(n);
+    // for (ll i = 0; i < n; i++)
+    // {
+    //     cin >> a[i];
+    //     // mp[a[i]] = i;
+    //     mp.insert(make_pair(a[i], i));
+    // }
+
+    // ll maxx = INT_MIN;
     // for (auto i : mp)
     // {
-    //     if (i.second == 1)
+    //     if (mpi.size() < cnt)
     //     {
-    //         st.push(i.first);
-    //     }
-    //     else
-    //     {
-    //         d.push_back(i.first - st.top());
-    //         st.pop();
+    //         ll idx = i.second, val = i.first;
+    //         mpi.insert(make_pair(idx, val));
+    //         maxx = max(maxx, val);
     //     }
     // }
 
-    // svr(d);
-    // sv(c);
+    // // for (auto i : mpi)
+    // // {
+    // //     cout << i.first << " " << i.second << endl;
+    // // }
 
-    // ll ans = 0;
-    // f(i, 0, n - 1) ans += d[i] * c[i];
+    // ll ans = 0, flag = 1, val = 0;
+    // for (auto i : mpi)
+    // {
+    //     // cout<<"second "<<i.second<<endl;
+    //     if (flag == 0 || i.second != maxx)
+    //     {
+    //         ans += (m * (i.second + val));
+    //         val += m;
+    //     }
+    //     else if (flag == 1)
+    //     {
+    //         if (k % m == 0)
+    //         {
+    //             ans += (m * (i.second + val));
+    //             val += m;
+    //         }
+    //         else
+    //         {
+    //             ans += ((k % m) * (i.second + val));
+    //             val += k % m;
+    //         }
+    //     }
+    //     // cout<<"val "<<val<<endl;
+    // }
     // cout << ans << endl;
-
-    set<int> st;
-
-    for (auto i : a)
-        st.insert(i);
-
-    ll ans = 0;
-    vi d;
-    f(i, 0, n - 1)
-    {
-        auto it = lower_bound(st.begin(), st.end(), b[i]);
-        if (it != st.begin())
-            --it;
-        // cout << "val " << *(it) << endl;
-        d.pb(b[i] - *(it));
-        st.erase(it);
-    }
-
-    sv(d);
-    svr(c);
-    f(i, 0, n - 1) ans += d[i] * c[i];
-    cout << ans << endl;
 }
 
 int main()

@@ -1,7 +1,7 @@
 /**
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
-* Coded on: 07-05-2024 17:39:52
+* Coded on: 08-05-2024 14:21:20
 * Coded by: Shubham Kandpal
 */
 
@@ -38,75 +38,33 @@ using namespace std;
 const ll mod = 1e9 + 7;
 
 /* DRIVER FUNCTION */
-map<int, vector<int>> adj;
-vector<int> visited(100001);
-vector<int> dp(100001);
-vector<vector<int>> g;
-vector<int> cnt;
-
-void dfs(int u, int v)
-{
-    if (adj[v][0] = u && adj[v].size() == 1)
-    {
-        cnt.push_back(v);
-    }
-
-    else
-    {
-        for (auto i : adj[v])
-        {
-            if (i != u)
-            {
-                dfs(v, i);
-            }
-        }
-        cnt.push_back(v);
-    }
-}
-
-int bfs(int v)
-{
-    // if visited, return 0
-    if (visited[v] == 1)
-        return 0;
-
-    // else
-    visited[v] = 1;
-    int cnt = 1;
-    for (auto i : adj[v])
-    {
-        cnt += bfs(i);
-    }
-    return dp[v] = cnt;
-}
-
 void solve()
 {
-    int n;
-    cin >> n;
-    f(i, 0, n - 2)
+    int n, m;
+    cin >> n >> m;
+    vi a(n), b(m);
+    f(i, 0, n - 1) cin >> a[i];
+    f(i, 0, m - 1) cin >> b[i];
+
+    if (n == 1)
     {
-        int x, y;
-        cin >> x >> y;
-        adj[x].push_back(y);
-        adj[y].push_back(x);
+        f(i, 0, m - 1) cout << b[i] + a[0] << " ";
+        cout << endl;
+        return;
     }
 
-    // bfs(1);
-    dfs(1, -1);
+    sort(all(a));
+    ll ans = a[1] - a[0];
 
-    for (auto i : cnt)
-        cout << i << " " << endl;
-
-    int q;
-    cin >> q;
-    f(i, 0, q - 1)
+    for (int i = 2; i < n; i += 1)
     {
-        int x, y;
-        cin >> x >> y;
+        ans = __gcd(ans, a[i] - a[i - 1]);
     }
 
-    f(i, 1, n) cout << dp[i] << " ";
+    f(i, 0, m - 1)
+    {
+        cout << __gcd(ans, b[i] + a[0]) << " ";
+    }
     cout << endl;
 }
 
@@ -117,11 +75,11 @@ int main()
     cout.tie(0);
     // cout.precision(10);
 
-    ll t;
-    cin >> t;
-    while (t--)
-    {
-        solve();
-    }
+    // ll t;
+    // cin >> t;
+    // while (t--)
+    // {
+    solve();
+    // }
     return 0;
 }

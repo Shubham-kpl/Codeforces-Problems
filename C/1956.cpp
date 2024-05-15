@@ -115,63 +115,37 @@ const ll mod = 1e9 + 7;
 void solve()
 {
 
-    ll n;
+    int n;
     cin >> n;
-    vi a(n), b(n), c(n);
 
-    f(i, 0, n - 1) cin >> a[i];
-    f(i, 0, n - 1) cin >> b[i];
-    f(i, 0, n - 1) cin >> c[i];
-
-    // stack<int> st;
-
-    // multimap<int, int> mp;
-
-    // f(i, 0, n - 1) mp.insert({a[i], 1});
-    // f(i, 0, n - 1) mp.insert({b[i], 2});
-
-    // vi d;
-    // for (auto i : mp)
-    // {
-    //     if (i.second == 1)
-    //     {
-    //         st.push(i.first);
-    //     }
-    //     else
-    //     {
-    //         d.push_back(i.first - st.top());
-    //         st.pop();
-    //     }
-    // }
-
-    // svr(d);
-    // sv(c);
-
-    // ll ans = 0;
-    // f(i, 0, n - 1) ans += d[i] * c[i];
-    // cout << ans << endl;
-
-    set<int> st;
-
-    for (auto i : a)
-        st.insert(i);
-
-    ll ans = 0;
-    vi d;
-    f(i, 0, n - 1)
+    ll sum = 0;
+    f(i, 1, n)
     {
-        auto it = lower_bound(st.begin(), st.end(), b[i]);
-        if (it != st.begin())
-            --it;
-        // cout << "val " << *(it) << endl;
-        d.pb(b[i] - *(it));
-        st.erase(it);
+        sum += (i * (2 * i - 1));
     }
 
-    sv(d);
-    svr(c);
-    f(i, 0, n - 1) ans += d[i] * c[i];
-    cout << ans << endl;
+    vector<vector<int>> v(n, vector<int>(n));
+
+    fr(i, n - 1, 0)
+    {
+        f(j, 0, n - 1)
+        {
+            v[j][i] = j + 1;
+            v[i][j] = j + 1;
+        }
+    }
+
+    cout << sum << " " << 2 * n << endl;
+
+    fr(i, n, 1)
+    {
+        cout << 2 << " " << i << " ";
+        f(i, 1, n) cout << i << " ";
+        cout << endl;
+        cout << 1 << " " << i << " ";
+        f(i, 1, n) cout << i << " ";
+        cout << endl;
+    }
 }
 
 int main()

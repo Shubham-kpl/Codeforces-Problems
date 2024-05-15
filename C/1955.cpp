@@ -3,7 +3,7 @@
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
 * The code below is:
-* Coded on : 20/04/2024
+* Coded on : 18/04/2024
 * Coded by: Shubham Kandpal
 
 */
@@ -115,63 +115,48 @@ const ll mod = 1e9 + 7;
 void solve()
 {
 
-    ll n;
-    cin >> n;
-    vi a(n), b(n), c(n);
+    ll n, k;
+    cin >> n >> k;
 
-    f(i, 0, n - 1) cin >> a[i];
-    f(i, 0, n - 1) cin >> b[i];
-    f(i, 0, n - 1) cin >> c[i];
+    deque<ll> dq(n);
 
-    // stack<int> st;
-
-    // multimap<int, int> mp;
-
-    // f(i, 0, n - 1) mp.insert({a[i], 1});
-    // f(i, 0, n - 1) mp.insert({b[i], 2});
-
-    // vi d;
-    // for (auto i : mp)
-    // {
-    //     if (i.second == 1)
-    //     {
-    //         st.push(i.first);
-    //     }
-    //     else
-    //     {
-    //         d.push_back(i.first - st.top());
-    //         st.pop();
-    //     }
-    // }
-
-    // svr(d);
-    // sv(c);
-
-    // ll ans = 0;
-    // f(i, 0, n - 1) ans += d[i] * c[i];
-    // cout << ans << endl;
-
-    set<int> st;
-
-    for (auto i : a)
-        st.insert(i);
+    for (int i = 0; i < n; i++)
+        cin >>
+            dq[i];
 
     ll ans = 0;
-    vi d;
-    f(i, 0, n - 1)
+
+    while (dq.size() > 1 && k > 0)
     {
-        auto it = lower_bound(st.begin(), st.end(), b[i]);
-        if (it != st.begin())
-            --it;
-        // cout << "val " << *(it) << endl;
-        d.pb(b[i] - *(it));
-        st.erase(it);
+        ll mn = min(dq.front(), dq.back());
+
+        if (k >= 2 * mn)
+        {
+            dq.front() -= mn;
+            dq.back() -= mn;
+            k -= (2 * mn);
+        }
+
+        else
+        {
+            dq.front() -= (k / 2 + k % 2);
+            dq.back() -= (k / 2);
+            k = 0;
+        }
+
+        if (dq.front() == 0)
+        {
+            ans++;
+            dq.pop_front();
+        }
+        if (dq.back() == 0)
+        {
+            ans++;
+            dq.pop_back();
+        }
     }
 
-    sv(d);
-    svr(c);
-    f(i, 0, n - 1) ans += d[i] * c[i];
-    cout << ans << endl;
+    cout << ans + ((dq.size() && dq.front() <= k)) << endl;
 }
 
 int main()

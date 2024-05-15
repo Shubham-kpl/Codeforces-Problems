@@ -1,7 +1,7 @@
 /**
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
-* Coded on: 07-05-2024 17:39:52
+* Coded on: 06-05-2024 23:26:22
 * Coded by: Shubham Kandpal
 */
 
@@ -38,76 +38,44 @@ using namespace std;
 const ll mod = 1e9 + 7;
 
 /* DRIVER FUNCTION */
-map<int, vector<int>> adj;
-vector<int> visited(100001);
-vector<int> dp(100001);
-vector<vector<int>> g;
-vector<int> cnt;
 
-void dfs(int u, int v)
+int count(vector<string> a, vector<vector<int>> &dp, int i, int j)
 {
-    if (adj[v][0] = u && adj[v].size() == 1)
-    {
-        cnt.push_back(v);
-    }
+    // if not equal to *
 
-    else
-    {
-        for (auto i : adj[v])
-        {
-            if (i != u)
-            {
-                dfs(v, i);
-            }
-        }
-        cnt.push_back(v);
-    }
-}
-
-int bfs(int v)
-{
-    // if visited, return 0
-    if (visited[v] == 1)
+    if (!(i >= 0 && i <= a.size() - 1 && j >= 0 && j <= a[0].size() - 1))
         return 0;
 
+    if (a[i][j] != '*')
+        return dp[i][j] = 0;
+
+    // if already known
+    if (dp[i][j] != -1)
+        return dp[i][j];
+
     // else
-    visited[v] = 1;
-    int cnt = 1;
-    for (auto i : adj[v])
-    {
-        cnt += bfs(i);
-    }
-    return dp[v] = cnt;
+    return dp[i][j] = 1 + min3(count(a, dp, i + 1, j - 1), count(a, dp, i + 1, j), count(a, dp, i + 1, j + 1));
 }
 
 void solve()
 {
-    int n;
-    cin >> n;
-    f(i, 0, n - 2)
+    int n, m;
+    cin >> n >> m;
+
+    vector<string> v(n);
+    f(i, 0, n - 1) cin >> v[i];
+
+    vector<vector<int>> dp(n, vector<int>(m, -1));
+
+    int ans = 0;
+    f(i, 0, n - 1)
     {
-        int x, y;
-        cin >> x >> y;
-        adj[x].push_back(y);
-        adj[y].push_back(x);
+        f(j, 0, m - 1)
+        {
+            ans += count(v, dp, i, j);
+        }
     }
-
-    // bfs(1);
-    dfs(1, -1);
-
-    for (auto i : cnt)
-        cout << i << " " << endl;
-
-    int q;
-    cin >> q;
-    f(i, 0, q - 1)
-    {
-        int x, y;
-        cin >> x >> y;
-    }
-
-    f(i, 1, n) cout << dp[i] << " ";
-    cout << endl;
+    cout << ans << endl;
 }
 
 int main()

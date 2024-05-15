@@ -3,7 +3,7 @@
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
 * The code below is:
-* Coded on : 20/04/2024
+* Coded on : 03/04/2024
 * Coded by: Shubham Kandpal
 
 */
@@ -115,63 +115,37 @@ const ll mod = 1e9 + 7;
 void solve()
 {
 
-    ll n;
+    int n;
     cin >> n;
-    vi a(n), b(n), c(n);
+    string a, b;
+    cin >> a >> b;
 
-    f(i, 0, n - 1) cin >> a[i];
-    f(i, 0, n - 1) cin >> b[i];
-    f(i, 0, n - 1) cin >> c[i];
+    int min = 0, max = n - 1;
 
-    // stack<int> st;
-
-    // multimap<int, int> mp;
-
-    // f(i, 0, n - 1) mp.insert({a[i], 1});
-    // f(i, 0, n - 1) mp.insert({b[i], 2});
-
-    // vi d;
-    // for (auto i : mp)
-    // {
-    //     if (i.second == 1)
-    //     {
-    //         st.push(i.first);
-    //     }
-    //     else
-    //     {
-    //         d.push_back(i.first - st.top());
-    //         st.pop();
-    //     }
-    // }
-
-    // svr(d);
-    // sv(c);
-
-    // ll ans = 0;
-    // f(i, 0, n - 1) ans += d[i] * c[i];
-    // cout << ans << endl;
-
-    set<int> st;
-
-    for (auto i : a)
-        st.insert(i);
-
-    ll ans = 0;
-    vi d;
-    f(i, 0, n - 1)
+    for (int i = n - 1; i >= 1; --i)
     {
-        auto it = lower_bound(st.begin(), st.end(), b[i]);
-        if (it != st.begin())
-            --it;
-        // cout << "val " << *(it) << endl;
-        d.pb(b[i] - *(it));
-        st.erase(it);
+        if (a[i] == '1' && b[i - 1] == '0')
+        {
+            max = i - 1;
+        }
     }
 
-    sv(d);
-    svr(c);
-    f(i, 0, n - 1) ans += d[i] * c[i];
+    for (int i = 1; i <= max; i++)
+    {
+        if (b[i - 1] == '1' && a[i] == '0')
+        {
+            min = i;
+        }
+    }
+
+    string ans = "";
+    for (int i = 0; i <= min; i++)
+        ans += a[i];
+    for (int i = min; i <= n - 1; i++)
+        ans += b[i];
+
     cout << ans << endl;
+    cout << max - min + 1 << endl;
 }
 
 int main()

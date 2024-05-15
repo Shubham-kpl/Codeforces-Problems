@@ -1,7 +1,7 @@
 /**
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
-* Coded on: 07-05-2024 17:39:52
+* Coded on: 08-05-2024 06:24:12
 * Coded by: Shubham Kandpal
 */
 
@@ -38,78 +38,50 @@ using namespace std;
 const ll mod = 1e9 + 7;
 
 /* DRIVER FUNCTION */
-map<int, vector<int>> adj;
-vector<int> visited(100001);
-vector<int> dp(100001);
-vector<vector<int>> g;
-vector<int> cnt;
-
-void dfs(int u, int v)
-{
-    if (adj[v][0] = u && adj[v].size() == 1)
-    {
-        cnt.push_back(v);
-    }
-
-    else
-    {
-        for (auto i : adj[v])
-        {
-            if (i != u)
-            {
-                dfs(v, i);
-            }
-        }
-        cnt.push_back(v);
-    }
-}
-
-int bfs(int v)
-{
-    // if visited, return 0
-    if (visited[v] == 1)
-        return 0;
-
-    // else
-    visited[v] = 1;
-    int cnt = 1;
-    for (auto i : adj[v])
-    {
-        cnt += bfs(i);
-    }
-    return dp[v] = cnt;
-}
-
 void solve()
 {
-    int n;
-    cin >> n;
-    f(i, 0, n - 2)
+    int n, k;
+    cin >> n >> k;
+
+    int sum = 0, x = 1;
+    vi pref;
+    while (sum < n)
     {
-        int x, y;
-        cin >> x >> y;
-        adj[x].push_back(y);
-        adj[y].push_back(x);
+        sum += x++;
+        pref.push_back(sum);
     }
 
-    // bfs(1);
-    dfs(1, -1);
-
-    for (auto i : cnt)
-        cout << i << " " << endl;
-
-    int q;
-    cin >> q;
-    f(i, 0, q - 1)
+    int l = 0, r = pref.size() - 1, mid, ans = -1;
+    while (l <= r)
     {
-        int x, y;
-        cin >> x >> y;
+        mid = l + (r - l) / 2;
+        if (pref[mid] >= k)
+            r = mid - 1;
+        else
+        {
+            ans = mid;
+            l = mid + 1;
+        }
     }
 
-    f(i, 1, n) cout << dp[i] << " ";
+    // ans is the index uptill which we can print values
+
+    vi v;
+    int extra = k - pref[ans] - 1;
+    for (int i = 1; i <= extra; i++)
+        v.push_back(1);
+
+    for (int i = 1; i <= ans + 1; i++)
+        v.push_back(i);
+
+    for (int i = k + 1; i <= n; i++)
+        v.push_back(i);
+
+    cout << v.size() << endl;
+    for (auto i : v)
+        cout << i << " ";
     cout << endl;
 }
-
 int main()
 {
     ios_base::sync_with_stdio(false);

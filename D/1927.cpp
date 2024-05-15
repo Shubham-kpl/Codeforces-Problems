@@ -115,63 +115,50 @@ const ll mod = 1e9 + 7;
 void solve()
 {
 
-    ll n;
+    int n;
     cin >> n;
-    vi a(n), b(n), c(n);
+
+    vi a(n);
 
     f(i, 0, n - 1) cin >> a[i];
-    f(i, 0, n - 1) cin >> b[i];
-    f(i, 0, n - 1) cin >> c[i];
 
-    // stack<int> st;
+    map<int, int> mp;
 
-    // multimap<int, int> mp;
-
-    // f(i, 0, n - 1) mp.insert({a[i], 1});
-    // f(i, 0, n - 1) mp.insert({b[i], 2});
-
-    // vi d;
-    // for (auto i : mp)
-    // {
-    //     if (i.second == 1)
-    //     {
-    //         st.push(i.first);
-    //     }
-    //     else
-    //     {
-    //         d.push_back(i.first - st.top());
-    //         st.pop();
-    //     }
-    // }
-
-    // svr(d);
-    // sv(c);
-
-    // ll ans = 0;
-    // f(i, 0, n - 1) ans += d[i] * c[i];
-    // cout << ans << endl;
-
-    set<int> st;
-
-    for (auto i : a)
-        st.insert(i);
-
-    ll ans = 0;
-    vi d;
-    f(i, 0, n - 1)
+    for (int i = 0; i < n; i++)
     {
-        auto it = lower_bound(st.begin(), st.end(), b[i]);
-        if (it != st.begin())
-            --it;
-        // cout << "val " << *(it) << endl;
-        d.pb(b[i] - *(it));
-        st.erase(it);
+        int j = i;
+        while (j < n - 1 && a[j] == a[j + 1])
+        {
+            j++;
+        }
+        for (int k = j; k >= i; k--)
+        {
+            mp[k] = j;
+        }
+
+        i = j;
     }
 
-    sv(d);
-    svr(c);
-    f(i, 0, n - 1) ans += d[i] * c[i];
-    cout << ans << endl;
+    // cout << "///////////////////////" << endl;
+    // for (auto i : mp)
+    //     cout << i.first << " " << i.second << endl;
+    // cout << "///////////////////////" << endl;
+
+    int q;
+    cin >> q;
+
+    while (q--)
+    {
+        int l, r;
+        cin >> l >> r;
+        l--, r--;
+        if (r <= mp[l])
+        {
+            cout << -1 << " " << -1 << endl;
+        }
+        else
+            cout << l + 1 << " " << mp[l] + 2 << endl;
+    }
 }
 
 int main()

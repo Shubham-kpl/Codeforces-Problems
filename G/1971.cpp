@@ -1,7 +1,7 @@
 /**
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
-* Coded on: 07-05-2024 17:39:52
+* Coded on: 15-05-2024 08:16:17
 * Coded by: Shubham Kandpal
 */
 
@@ -38,75 +38,70 @@ using namespace std;
 const ll mod = 1e9 + 7;
 
 /* DRIVER FUNCTION */
-map<int, vector<int>> adj;
-vector<int> visited(100001);
-vector<int> dp(100001);
-vector<vector<int>> g;
-vector<int> cnt;
-
-void dfs(int u, int v)
-{
-    if (adj[v][0] = u && adj[v].size() == 1)
-    {
-        cnt.push_back(v);
-    }
-
-    else
-    {
-        for (auto i : adj[v])
-        {
-            if (i != u)
-            {
-                dfs(v, i);
-            }
-        }
-        cnt.push_back(v);
-    }
-}
-
-int bfs(int v)
-{
-    // if visited, return 0
-    if (visited[v] == 1)
-        return 0;
-
-    // else
-    visited[v] = 1;
-    int cnt = 1;
-    for (auto i : adj[v])
-    {
-        cnt += bfs(i);
-    }
-    return dp[v] = cnt;
-}
-
 void solve()
 {
     int n;
     cin >> n;
-    f(i, 0, n - 2)
+    vi a(n);
+    f(i, 0, n - 1) cin >> a[i];
+
+    // brute force
+    // f(i, 0, n - 1)
+    // {
+    //     long long val = 1e9 + 1, idx = -1;
+    //     f(j, i + 1, n - 1)
+    //     {
+    //         if (a[j] < a[i] && (a[j] ^ a[i]) < 4)
+    //         {
+    //             if (val > a[j])
+    //             {
+    //                 val = a[j];
+    //                 idx = j;
+    //             }
+    //         }
+    //     }
+    //     if (idx != -1)
+    //         swap(a[i], a[idx]);
+    // }
+
+    // optimized 1
+
+    // group based on value after second bit
+
+    // 1. use priority queue
+    // cp is a vector that stores a priority queue corresponding to each group
+
+    // priority queue is increasing
+    // map<int, priority_queue<int, vi, greater<int>>> cp;
+    // f(i, 0, n - 1)
+    // {
+    //     cp[a[i] >> 2].push(a[i]);
+    // }
+
+    // for (int i = 0; i < n; i++)
+    // {
+    //     cout << cp[a[i] >> 2].top() << endl;
+    //     cp[a[i] >> 2].pop();
+    // }
+    // cout << endl;
+
+    // 2. use vectors and explicitly sort them
+    map<int, vi> cp;
+    f(i, 0, n - 1)
     {
-        int x, y;
-        cin >> x >> y;
-        adj[x].push_back(y);
-        adj[y].push_back(x);
+        cp[a[i] >> 2].push_back(a[i]);
     }
 
-    // bfs(1);
-    dfs(1, -1);
-
-    for (auto i : cnt)
-        cout << i << " " << endl;
-
-    int q;
-    cin >> q;
-    f(i, 0, q - 1)
+    for (auto &i : cp)
     {
-        int x, y;
-        cin >> x >> y;
+        sort(i.second.rbegin(), i.second.rend());
     }
 
-    f(i, 1, n) cout << dp[i] << " ";
+    for (int i = 0; i < n; i++)
+    {
+        cout << cp[a[i] >> 2].back() << " ";
+        cp[a[i] >> 2].pop_back();
+    }
     cout << endl;
 }
 

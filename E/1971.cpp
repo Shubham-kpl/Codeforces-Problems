@@ -1,7 +1,7 @@
 /**
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
-* Coded on: 07-05-2024 17:39:52
+* Coded on: 15-05-2024 11:00:35
 * Coded by: Shubham Kandpal
 */
 
@@ -38,78 +38,51 @@ using namespace std;
 const ll mod = 1e9 + 7;
 
 /* DRIVER FUNCTION */
-map<int, vector<int>> adj;
-vector<int> visited(100001);
-vector<int> dp(100001);
-vector<vector<int>> g;
-vector<int> cnt;
-
-void dfs(int u, int v)
-{
-    if (adj[v][0] = u && adj[v].size() == 1)
-    {
-        cnt.push_back(v);
-    }
-
-    else
-    {
-        for (auto i : adj[v])
-        {
-            if (i != u)
-            {
-                dfs(v, i);
-            }
-        }
-        cnt.push_back(v);
-    }
-}
-
-int bfs(int v)
-{
-    // if visited, return 0
-    if (visited[v] == 1)
-        return 0;
-
-    // else
-    visited[v] = 1;
-    int cnt = 1;
-    for (auto i : adj[v])
-    {
-        cnt += bfs(i);
-    }
-    return dp[v] = cnt;
-}
-
 void solve()
 {
-    int n;
-    cin >> n;
-    f(i, 0, n - 2)
+    long long n, k, q;
+    cin >> n >> k >> q;
+
+    vector<double> dist(k + 1);
+    vector<double> time(k + 1);
+
+    f(i, 1, k) cin >> dist[i];
+    f(i, 1, k) cin >> time[i];
+
+    while (q--)
     {
-        int x, y;
-        cin >> x >> y;
-        adj[x].push_back(y);
-        adj[y].push_back(x);
+        int x;
+        cin >> x;
+
+        int l = 0, r = k, mid;
+
+        while (l <= r)
+        {
+            mid = l + (r - l) / 2;
+            // finding the region where the input lies
+            if (x < dist[mid])
+            {
+                r = mid - 1;
+            }
+            else
+            {
+                l = mid + 1;
+            }
+        }
+
+        // r contains that index where the x lies
+
+        long long res = time[r];
+        double rem = x - dist[r];
+        // cout << rem << endl;
+        if (rem > 0)
+            res += (rem * (time[r + 1] - time[r]) / (dist[r + 1] - dist[r]));
+
+        cout << res << " ";
     }
 
-    // bfs(1);
-    dfs(1, -1);
-
-    for (auto i : cnt)
-        cout << i << " " << endl;
-
-    int q;
-    cin >> q;
-    f(i, 0, q - 1)
-    {
-        int x, y;
-        cin >> x >> y;
-    }
-
-    f(i, 1, n) cout << dp[i] << " ";
     cout << endl;
 }
-
 int main()
 {
     ios_base::sync_with_stdio(false);

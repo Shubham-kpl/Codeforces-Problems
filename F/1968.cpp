@@ -1,7 +1,7 @@
 /**
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
-* Coded on: 07-05-2024 17:39:52
+* Coded on: 08-05-2024 07:38:41
 * Coded by: Shubham Kandpal
 */
 
@@ -38,75 +38,50 @@ using namespace std;
 const ll mod = 1e9 + 7;
 
 /* DRIVER FUNCTION */
-map<int, vector<int>> adj;
-vector<int> visited(100001);
-vector<int> dp(100001);
-vector<vector<int>> g;
-vector<int> cnt;
-
-void dfs(int u, int v)
-{
-    if (adj[v][0] = u && adj[v].size() == 1)
-    {
-        cnt.push_back(v);
-    }
-
-    else
-    {
-        for (auto i : adj[v])
-        {
-            if (i != u)
-            {
-                dfs(v, i);
-            }
-        }
-        cnt.push_back(v);
-    }
-}
-
-int bfs(int v)
-{
-    // if visited, return 0
-    if (visited[v] == 1)
-        return 0;
-
-    // else
-    visited[v] = 1;
-    int cnt = 1;
-    for (auto i : adj[v])
-    {
-        cnt += bfs(i);
-    }
-    return dp[v] = cnt;
-}
-
 void solve()
 {
-    int n;
-    cin >> n;
-    f(i, 0, n - 2)
+    ll n, q;
+    cin >> n >> q;
+    vector<ll> a(n + 1);
+
+    // b[i] = xor of vector 'a' until i
+    vector<ll> b(n + 1);
+
+    // this map stores the location of various xors
+    map<ll, vector<ll>> mp;
+
+    // let the xor-value "0" be present at mp[0], means initially before every other index, xor-value = 0
+    mp[0].push_back(0);
+    f(i, 1, n)
     {
-        int x, y;
-        cin >> x >> y;
-        adj[x].push_back(y);
-        adj[y].push_back(x);
+        cin >> a[i];
+        b[i] = b[i - 1] ^ a[i];
+        mp[b[i]].push_back(i);
     }
 
-    // bfs(1);
-    dfs(1, -1);
-
-    for (auto i : cnt)
-        cout << i << " " << endl;
-
-    int q;
-    cin >> q;
-    f(i, 0, q - 1)
+    while (q--)
     {
-        int x, y;
-        cin >> x >> y;
-    }
+        ll l, r;
+        cin >> l >> r;
 
-    f(i, 1, n) cout << dp[i] << " ";
+        // check if it can be partitioned into two parts
+        if (b[l - 1] == b[r])
+        {
+            cout << "YES" << endl;
+            continue;
+        }
+
+        // else we will try to compute p and q
+        int p, q;
+
+        // for p, search in the xor-array of "b[r]", p is the first value which is >= l, having xor-value = b[r]
+        p = *lower_bound(mp[b[r]].begin(), mp[b[r]].end(), l);
+
+        // for q, q is the element which is nearest to r (q<r) (towards left side) and whose  xor-value = b[l-1],
+        q = *--lower_bound(mp[b[l - 1]].begin(), mp[b[l - 1]].end(), r);
+
+        cout << (q > p ? "YES" : "NO") << endl;
+    }
     cout << endl;
 }
 

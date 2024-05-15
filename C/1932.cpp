@@ -3,7 +3,7 @@
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
 * The code below is:
-* Coded on : 20/04/2024
+* Coded on : 09/04/2024
 * Coded by: Shubham Kandpal
 
 */
@@ -115,63 +115,46 @@ const ll mod = 1e9 + 7;
 void solve()
 {
 
-    ll n;
-    cin >> n;
-    vi a(n), b(n), c(n);
-
-    f(i, 0, n - 1) cin >> a[i];
+    ll n, m;
+    cin >> n >> m;
+    vi b(n);
     f(i, 0, n - 1) cin >> b[i];
-    f(i, 0, n - 1) cin >> c[i];
+    string s;
+    cin >> s;
 
-    // stack<int> st;
-
-    // multimap<int, int> mp;
-
-    // f(i, 0, n - 1) mp.insert({a[i], 1});
-    // f(i, 0, n - 1) mp.insert({b[i], 2});
-
-    // vi d;
-    // for (auto i : mp)
-    // {
-    //     if (i.second == 1)
-    //     {
-    //         st.push(i.first);
-    //     }
-    //     else
-    //     {
-    //         d.push_back(i.first - st.top());
-    //         st.pop();
-    //     }
-    // }
-
-    // svr(d);
-    // sv(c);
-
-    // ll ans = 0;
-    // f(i, 0, n - 1) ans += d[i] * c[i];
-    // cout << ans << endl;
-
-    set<int> st;
-
-    for (auto i : a)
-        st.insert(i);
-
-    ll ans = 0;
-    vi d;
-    f(i, 0, n - 1)
+    ll l = 0, r = n - 1;
+    for (int i = 0; i < n - 1; i++)
     {
-        auto it = lower_bound(st.begin(), st.end(), b[i]);
-        if (it != st.begin())
-            --it;
-        // cout << "val " << *(it) << endl;
-        d.pb(b[i] - *(it));
-        st.erase(it);
+        if (s[i] == 'L')
+            l++;
+        else
+            r--;
     }
 
-    sv(d);
-    svr(c);
-    f(i, 0, n - 1) ans += d[i] * c[i];
-    cout << ans << endl;
+    // assert(l == r);
+    ll ans = b[l] % m;
+    vi a;
+    a.pb(ans);
+    ll l1 = l, r1 = l;
+    // reverse(all(s));
+    // cout << s << endl;
+    for (int i = n - 2; i >= 0; i--)
+    {
+        if (s[i] == 'L')
+        {
+            ans = (ans * b[--l1]) % m;
+        }
+        else
+        {
+            ans = (ans * b[++r1]) % m;
+        }
+        a.pb(ans);
+    }
+    // assert(l1 == 0);
+    // assert(r1 == n - 1);
+    for (int i = n - 1; i >= 0; i--)
+        cout << a[i] << " ";
+    cout << endl;
 }
 
 int main()

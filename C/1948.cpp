@@ -3,7 +3,7 @@
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
 * The code below is:
-* Coded on : 20/04/2024
+* Coded on : 03/04/2024
 * Coded by: Shubham Kandpal
 
 */
@@ -114,71 +114,37 @@ const ll mod = 1e9 + 7;
 /* DRIVER FUNCTION */
 void solve()
 {
-
     ll n;
     cin >> n;
-    vi a(n), b(n), c(n);
+    string a, b;
+    cin >> a >> b;
 
-    f(i, 0, n - 1) cin >> a[i];
-    f(i, 0, n - 1) cin >> b[i];
-    f(i, 0, n - 1) cin >> c[i];
+    ll pos = -1;
 
-    // stack<int> st;
-
-    // multimap<int, int> mp;
-
-    // f(i, 0, n - 1) mp.insert({a[i], 1});
-    // f(i, 0, n - 1) mp.insert({b[i], 2});
-
-    // vi d;
-    // for (auto i : mp)
-    // {
-    //     if (i.second == 1)
-    //     {
-    //         st.push(i.first);
-    //     }
-    //     else
-    //     {
-    //         d.push_back(i.first - st.top());
-    //         st.pop();
-    //     }
-    // }
-
-    // svr(d);
-    // sv(c);
-
-    // ll ans = 0;
-    // f(i, 0, n - 1) ans += d[i] * c[i];
-    // cout << ans << endl;
-
-    set<int> st;
-
-    for (auto i : a)
-        st.insert(i);
-
-    ll ans = 0;
-    vi d;
-    f(i, 0, n - 1)
+    for (int i = 0; i < n; i++)
     {
-        auto it = lower_bound(st.begin(), st.end(), b[i]);
-        if (it != st.begin())
-            --it;
-        // cout << "val " << *(it) << endl;
-        d.pb(b[i] - *(it));
-        st.erase(it);
+        if (i % 2 == 0 && b[i] == '>')
+        {
+            pos = i;
+        }
+        else if (i % 2 != 0 && i != n - 1 && a[i] == '>')
+        {
+            pos = i;
+        }
+        if (i - pos == 2)
+        {
+            cout << "no" << endl;
+            return;
+        }
     }
-
-    sv(d);
-    svr(c);
-    f(i, 0, n - 1) ans += d[i] * c[i];
-    cout << ans << endl;
+    cout << "yes" << endl;
 }
 
 int main()
 {
     ios_base::sync_with_stdio(false);
-    cin.tie(0);
-    cout.tie(0);
+    // cin.tie(0);
+    // cout.tie(0);
     // cout.precision(10);
 
     ll t;
