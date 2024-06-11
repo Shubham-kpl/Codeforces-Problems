@@ -1,7 +1,7 @@
 /**
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
-* Coded on: 10-06-2024 21:05:48
+* Coded on: 26-05-2024 09:56:06
 * Coded by: Shubham Kandpal
 */
 
@@ -12,6 +12,7 @@ using namespace std;
 #define ll long long
 #define pb push_back
 #define all(x) x.begin(), x.end()
+#define bits(x) __builtin_popcount(x)
 #define pf(val) cout << val << endl;
 #define f(i, a, b) for (ll i = a; i <= b; ++i)
 #define fr(i, a, b) for (ll i = a; i >= b; --i)
@@ -40,34 +41,24 @@ const ll mod = 1e9 + 7;
 /* DRIVER FUNCTION */
 void solve()
 {
-    ll x;
-    cin >> x;
+    ll n, p;
+    cin >> n >> p;
 
-    if (x == 1)
-    {
-        cout << 1 << endl;
-        return;
-    }
+    /**
+     * Why can't k go beyond 31
+     *
+     * I suppose because the max. no. of bits a no. can have is 31, so it can't be more
+     */
 
-    if (x == 3)
+    f(k, 1, 31)
     {
-        cout << "169 196 961" << endl;
-        return;
-    }
-    0
-
-        // no. of zeroes to be added
-        ll z = x - 3;
-    ll cnt = 0;
-    while (cnt != x)
-    {
-        f(i, 1, x)
+        if (n - k * p >= k && bits(n - k * p) <= k)
         {
-            if (i <= 3)
-                cout <<
+            cout << k << endl;
+            return;
         }
-        cnt++;
     }
+    cout << -1 << endl;
 }
 
 int main()
@@ -77,11 +68,7 @@ int main()
     cout.tie(0);
     // cout.precision(10);
 
-    ll t = 1;
-    cin >> t;
-    while (t--)
-    {
-        solve();
-    }
+    solve();
+
     return 0;
 }

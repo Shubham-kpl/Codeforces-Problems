@@ -1,7 +1,7 @@
 /**
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
-* Coded on: 10-06-2024 21:05:48
+* Coded on: 21-05-2024 10:45:01
 * Coded by: Shubham Kandpal
 */
 
@@ -10,7 +10,6 @@ using namespace std;
 
 /* MACROS */
 #define ll long long
-#define pb push_back
 #define all(x) x.begin(), x.end()
 #define pf(val) cout << val << endl;
 #define f(i, a, b) for (ll i = a; i <= b; ++i)
@@ -40,34 +39,48 @@ const ll mod = 1e9 + 7;
 /* DRIVER FUNCTION */
 void solve()
 {
-    ll x;
-    cin >> x;
+    string s;
+    cin >> s;
+    ll nb, ns, nc, pb, ps, pc, r;
+    cin >> nb >> ns >> nc >> pb >> ps >> pc >> r;
 
-    if (x == 1)
+    /**
+     * use binary searach,
+     * ta   ke a value x and reduce sample space
+     *
+     * for each each we can  check if it is feasible
+     */
+
+    ll n1 = 0, n2 = 0, n3 = 0;
+    for (auto i : s)
     {
-        cout << 1 << endl;
-        return;
+        if (i == 'B')
+            n1++;
+        else if (i == 'S')
+            n2++;
+        else
+            n3++;
     }
 
-    if (x == 3)
+    ll x = 0, y = 1e13, m = x + (y - x) / 2, ans = -1;
+    while (x <= y)
     {
-        cout << "169 196 961" << endl;
-        return;
-    }
-    0
+        // required value
+        ll req = (max(0LL, n1 * m - nb)) * pb + (max(0LL, n2 * m - ns)) * ps + (max(0LL, n3 * m - nc)) * pc;
 
-        // no. of zeroes to be added
-        ll z = x - 3;
-    ll cnt = 0;
-    while (cnt != x)
-    {
-        f(i, 1, x)
+        if (req > r)
         {
-            if (i <= 3)
-                cout <<
+            y = m - 1;
         }
-        cnt++;
+        else
+        {
+            ans = m;
+            x = m + 1;
+        }
+        m = x + (y - x) / 2;
     }
+
+    cout << ans << endl;
 }
 
 int main()
@@ -77,11 +90,11 @@ int main()
     cout.tie(0);
     // cout.precision(10);
 
-    ll t = 1;
-    cin >> t;
-    while (t--)
-    {
-        solve();
-    }
+    // ll t;
+    // cin >> t;
+    // while (t--)
+    // {
+    solve();
+    // }
     return 0;
 }

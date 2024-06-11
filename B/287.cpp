@@ -1,7 +1,7 @@
 /**
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
-* Coded on: 10-06-2024 21:05:48
+* Coded on: 21-05-2024 17:06:53
 * Coded by: Shubham Kandpal
 */
 
@@ -40,34 +40,45 @@ const ll mod = 1e9 + 7;
 /* DRIVER FUNCTION */
 void solve()
 {
-    ll x;
-    cin >> x;
+    ll n, k;
+    cin >> n >> k;
 
-    if (x == 1)
+    // k^2-k+2
+    if ((pow(k, 2) - k + 2) < n)
     {
-        cout << 1 << endl;
+        cout << -1 << endl;
         return;
     }
 
-    if (x == 3)
+    ll x = 2, y = k, mid;
+    while (x <= y)
     {
-        cout << "169 196 961" << endl;
-        return;
-    }
-    0
+        mid = x + (y - x) / 2;
 
-        // no. of zeroes to be added
-        ll z = x - 3;
-    ll cnt = 0;
-    while (cnt != x)
-    {
-        f(i, 1, x)
+        ll sum = ((k - mid + 1) * (mid + k)) / 2 - (k - mid);
+        if (sum > n)
         {
-            if (i <= 3)
-                cout <<
+            x = mid + 1;
         }
-        cnt++;
+        else
+        {
+            y = mid - 1;
+        }
     }
+
+    if (x == k + 1) // if n == 1
+    {
+        cout << 0 << endl;
+        return;
+    }
+
+    ll val = (k - x + 1) * (x + k) / 2 - (k - x);
+    if (val == n)
+    {
+        cout << k - x + 1 << endl;
+    }
+    else
+        cout << k - x + 2 << endl;
 }
 
 int main()
@@ -77,11 +88,11 @@ int main()
     cout.tie(0);
     // cout.precision(10);
 
-    ll t = 1;
-    cin >> t;
-    while (t--)
-    {
-        solve();
-    }
+    // ll t;
+    // cin >> t;
+    // while (t--)
+    // {
+    solve();
+    // }
     return 0;
 }

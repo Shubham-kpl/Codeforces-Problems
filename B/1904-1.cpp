@@ -1,7 +1,7 @@
 /**
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
-* Coded on: 10-06-2024 21:05:48
+* Coded on: 17-05-2024 11:04:42
 * Coded by: Shubham Kandpal
 */
 
@@ -40,34 +40,68 @@ const ll mod = 1e9 + 7;
 /* DRIVER FUNCTION */
 void solve()
 {
-    ll x;
-    cin >> x;
+    ll n;
+    cin >> n;
+    vi a(n);
+    f(i, 0, n - 1) cin >> a[i];
 
-    if (x == 1)
+    vector<pair<ll, ll>> p;
+    f(i, 0, n - 1) p.push_back({a[i], i});
+
+    vi pr;
+
+    sort(all(p));
+    ll sum = 0;
+
+    // calculating prefix sum
+    for (auto i : p)
     {
-        cout << 1 << endl;
-        return;
+        pr.push_back(i.first + sum);
+        sum += i.first;
     }
 
-    if (x == 3)
-    {
-        cout << "169 196 961" << endl;
-        return;
-    }
-    0
+    // answer vector
+    vi ans(n);
 
-        // no. of zeroes to be added
-        ll z = x - 3;
-    ll cnt = 0;
-    while (cnt != x)
+    // back will store the max index which can be erased
+    ll back = 0;
+
+    f(i, 0, n - 1)
     {
-        f(i, 1, x)
+
+        // score is initially set to the prefix sum until index 'i'
+        ll score = pr[i];
+
+        // since element at index 'i' can easily erase those <i
+        back = max(back, i);
+
+        // if back has already reached n - 1
+        if (back == n - 1)
         {
-            if (i <= 3)
-                cout <<
+            ans[p[i].second] = back;
+            continue;
         }
-        cnt++;
+
+        // else start from back + 1 to n - 1
+        f(j, back + 1, n - 1)
+        {
+
+            if (score > a[j])
+            {
+                back = j;
+                score += a[j];
+            }
+            else
+                break;
+        }
+
+        ans[p[i].second] = back;
     }
+
+    for (auto i : ans)
+        cout << i << " ";
+
+    cout << endl;
 }
 
 int main()
@@ -77,7 +111,7 @@ int main()
     cout.tie(0);
     // cout.precision(10);
 
-    ll t = 1;
+    ll t;
     cin >> t;
     while (t--)
     {

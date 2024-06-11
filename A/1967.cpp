@@ -1,7 +1,7 @@
 /**
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
-* Coded on: 10-06-2024 21:05:48
+* Coded on: 26-05-2024 11:13:38
 * Coded by: Shubham Kandpal
 */
 
@@ -38,36 +38,42 @@ using namespace std;
 const ll mod = 1e9 + 7;
 
 /* DRIVER FUNCTION */
+ll check(ll t, ll k, vi a)
+{
+    ll extra = 0, cnt = 0;
+    for (auto i : a)
+    {
+        if (i >= t)
+            extra += (i > t);
+        else
+            k -= (t - i), cnt++;
+        if (k < 0)
+            return 0;
+    }
+    return (t - 1) * a.size() + 1 + extra + (min(cnt, k));
+}
 void solve()
 {
-    ll x;
-    cin >> x;
-
-    if (x == 1)
+    ll n, k;
+    cin >> n >> k;
+    vi a(n);
+    f(i, 0, n - 1) cin >> a[i];
+    sort(all(a));
+    ll l = 1, r = a[0] + k, m;
+    ll res = 0;
+    while (l <= r)
     {
-        cout << 1 << endl;
-        return;
-    }
-
-    if (x == 3)
-    {
-        cout << "169 196 961" << endl;
-        return;
-    }
-    0
-
-        // no. of zeroes to be added
-        ll z = x - 3;
-    ll cnt = 0;
-    while (cnt != x)
-    {
-        f(i, 1, x)
+        m = l + (r - l) / 2;
+        ll ans = check(m, k, a);
+        if (ans)
         {
-            if (i <= 3)
-                cout <<
+            res = ans,
+            l = m + 1;
         }
-        cnt++;
+        else
+            r = m - 1;
     }
+    cout << res << endl;
 }
 
 int main()

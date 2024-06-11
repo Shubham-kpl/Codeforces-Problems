@@ -1,7 +1,7 @@
 /**
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
-* Coded on: 10-06-2024 21:05:48
+* Coded on: 22-05-2024 10:15:46
 * Coded by: Shubham Kandpal
 */
 
@@ -40,34 +40,55 @@ const ll mod = 1e9 + 7;
 /* DRIVER FUNCTION */
 void solve()
 {
-    ll x;
-    cin >> x;
+    ll n;
+    cin >> n;
+    vi a(n);
+    f(i, 0, n - 1) cin >> a[i];
 
-    if (x == 1)
-    {
-        cout << 1 << endl;
-        return;
-    }
+    /***
+     * we can have 2 ^n possibilities (equal to no. of subsequences)
+     *
+     * lets use bit masks
+     *
+     * we have to check for each of the subseq whether to add it or subtract
+     *
+     * we can do so by checking whether its bit is 1 or 0
+     *
+     * if 1 => add
+     * 0 => subtract
+     *
+     * How to check
+     *
+     * for j = 1 to 2 ^ n -1
+     *
+     * for each i = 1 to n - 1
+     *
+     * do
+     *  if (1 << i) & j == 1 // 1 << i represents its position
+     *      do add
+     *  else
+     *      do subtract
+     */
 
-    if (x == 3)
+    f(i, 0, (1 << n) - 1)
     {
-        cout << "169 196 961" << endl;
-        return;
-    }
-    0
-
-        // no. of zeroes to be added
-        ll z = x - 3;
-    ll cnt = 0;
-    while (cnt != x)
-    {
-        f(i, 1, x)
+        ll ans = 0;
+        f(j, 0, n - 1)
         {
-            if (i <= 3)
-                cout <<
+            if (i & (1 << j))
+            {
+                ans += a[j];
+            }
+            else
+                ans -= a[j];
         }
-        cnt++;
+        if (ans % 360 == 0)
+        {
+            cout << "YES" << endl;
+            return;
+        }
     }
+    cout << "NO" << endl;
 }
 
 int main()
@@ -77,11 +98,6 @@ int main()
     cout.tie(0);
     // cout.precision(10);
 
-    ll t = 1;
-    cin >> t;
-    while (t--)
-    {
-        solve();
-    }
+    solve();
     return 0;
 }

@@ -1,7 +1,7 @@
 /**
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
-* Coded on: 10-06-2024 21:05:48
+* Coded on: 05-06-2024 16:43:15
 * Coded by: Shubham Kandpal
 */
 
@@ -40,34 +40,65 @@ const ll mod = 1e9 + 7;
 /* DRIVER FUNCTION */
 void solve()
 {
-    ll x;
-    cin >> x;
+    ll n;
+    cin >> n;
+    vi a(n);
+    f(i, 0, n - 1) cin >> a[i];
 
-    if (x == 1)
-    {
-        cout << 1 << endl;
-        return;
-    }
+    // idx to check if there exists any idx, where gcd[idx] > gcd[idx + 1]
+    ll idx = -1;
 
-    if (x == 3)
+    // to check if given gcd is non-decreasing or not
+    auto check = [&](vi arr)
     {
-        cout << "169 196 961" << endl;
-        return;
-    }
-    0
+        ll chk = true;
+        ll g = __gcd(arr[0], arr[1]);
 
-        // no. of zeroes to be added
-        ll z = x - 3;
-    ll cnt = 0;
-    while (cnt != x)
-    {
-        f(i, 1, x)
+        f(i, 1, (int)arr.size() - 2)
         {
-            if (i <= 3)
-                cout <<
+            ll curr = __gcd(arr[i], arr[i + 1]);
+            if (g > curr)
+            {
+                idx = i;
+                return false;
+            }
+            g = curr;
         }
-        cnt++;
+        return true;
+    };
+
+    check(a);
+
+    if (idx == -1)
+    {
+        cout << "YES" << "\n";
+        return;
     }
+
+    // we'll make ammends at "idx - 1", "idx" and "idx + 1"
+    vi a0 = a, a1 = a, a2 = a;
+
+    if (idx > 0)
+    {
+        a0.erase(a0.begin() + idx - 1);
+    }
+    a1.erase(a1.begin() + idx);
+    if (idx < n - 1)
+    {
+        a2.erase(a2.begin() + idx + 1);
+    }
+
+    // for (auto i : a0)
+    //     cout << i << " ";cout<<"\n";
+    // for (auto i : a1)
+    //     cout << i << " ";cout<<"\n";
+    // for (auto i : a2)
+    //     cout << i << " ";cout<<"\n";
+
+    if (check(a0) || check(a1) || check(a2))
+        cout << "YES" << endl;
+    else
+        cout << "NO" << endl;
 }
 
 int main()

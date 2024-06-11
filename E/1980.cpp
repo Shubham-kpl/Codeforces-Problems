@@ -1,7 +1,7 @@
 /**
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
-* Coded on: 10-06-2024 21:05:48
+* Coded on: 05-06-2024 17:41:08
 * Coded by: Shubham Kandpal
 */
 
@@ -40,34 +40,50 @@ const ll mod = 1e9 + 7;
 /* DRIVER FUNCTION */
 void solve()
 {
+    ll n, m;
+    cin >> n >> m;
+
+    vector<set<ll>> row(n), column(m);
+
     ll x;
-    cin >> x;
-
-    if (x == 1)
+    f(i, 0, n - 1)
     {
-        cout << 1 << endl;
-        return;
-    }
-
-    if (x == 3)
-    {
-        cout << "169 196 961" << endl;
-        return;
-    }
-    0
-
-        // no. of zeroes to be added
-        ll z = x - 3;
-    ll cnt = 0;
-    while (cnt != x)
-    {
-        f(i, 1, x)
+        f(j, 0, m - 1)
         {
-            if (i <= 3)
-                cout <<
+            cin >> x;
+            row[i].insert(x);
+            column[j].insert(x);
         }
-        cnt++;
     }
+
+    vector<set<ll>> r(n), c(m);
+    f(i, 0, n - 1)
+    {
+        f(j, 0, m - 1)
+        {
+            cin >> x;
+            r[i].insert(x);
+            c[j].insert(x);
+        }
+    }
+
+    for (auto i : row)
+    {
+        if (count(r.begin(), r.end(), i) == 0)
+        {
+            cout << "NO" << endl;
+            return;
+        }
+    }
+    for (auto i : column)
+    {
+        if (count(c.begin(), c.end(), i) == 0)
+        {
+            cout << "NO" << endl;
+            return;
+        }
+    }
+    cout << "YES" << endl;
 }
 
 int main()

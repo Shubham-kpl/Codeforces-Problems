@@ -1,7 +1,7 @@
 /**
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
-* Coded on: 10-06-2024 21:05:48
+* Coded on: 26-05-2024 20:10:14
 * Coded by: Shubham Kandpal
 */
 
@@ -38,35 +38,48 @@ using namespace std;
 const ll mod = 1e9 + 7;
 
 /* DRIVER FUNCTION */
+
+void chk(ll &x, vi &a)
+{
+    if (x == 1)
+        a.push_back(x < 0 ? -1 : 1);
+    else if (x == 2)
+        a.push_back(x < 0 ? -1 : 1),
+            a.push_back(0);
+    else if (x == 3)
+        a.push_back(x < 0 ? -1 : 1), a.push_back(0), a.push_back(1);
+    else if (x == 4)
+        a.push_back(x < 0 ? -1 : 1), a.push_back(0), a.push_back(0);
+    else if (x == 5)
+        a.push_back(x < 0 ? -1 : 1), a.push_back(0), a.push_back(x < 0 ? -1 : 1);
+    else
+    {
+    }
+}
+
 void solve()
 {
     ll x;
     cin >> x;
 
     if (x == 1)
-    {
         cout << 1 << endl;
-        return;
-    }
-
-    if (x == 3)
+    else if (x == 2)
+        cout << "0 1" << endl;
+    else if (x == 3)
+        cout << "-1 0 1" << endl;
+    else if (x == 4)
+        cout << "0 0 1" << endl;
+    else if (x == 5)
+        cout << "1 0 1" << endl;
+    else
     {
-        cout << "169 196 961" << endl;
-        return;
-    }
-    0
-
-        // no. of zeroes to be added
-        ll z = x - 3;
-    ll cnt = 0;
-    while (cnt != x)
-    {
-        f(i, 1, x)
-        {
-            if (i <= 3)
-                cout <<
-        }
-        cnt++;
+        vi ans;
+        while (x != 0)
+            chk(x, ans);
+        reverse(all(ans));
+        for (auto i : ans)
+            cout << i << " ";
     }
 }
 

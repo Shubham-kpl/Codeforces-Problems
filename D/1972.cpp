@@ -1,7 +1,7 @@
 /**
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
-* Coded on: 10-06-2024 21:05:48
+* Coded on: 17-05-2024 09:19:18
 * Coded by: Shubham Kandpal
 */
 
@@ -35,39 +35,89 @@ using namespace std;
 #define M 1000001
 
 /* CONSTANTS */
-const ll mod = 1e9 + 7;
+const ll mod = 20;
+
+vi spf(mod + 1);
+vvi factors(mod);
+
+void calcSpf()
+{
+    f(i, 1, mod)
+    {
+        if (i % 2 == 0)
+            spf[i] = 2;
+        else
+            spf[i] = 1;
+    }
+
+    // cout << spf[6] << " ";
+
+    f(i, 3, mod)
+    {
+        if (spf[i] != 1)
+            continue;
+
+        for (int j = i; j <= mod; j += i)
+        {
+            if (spf[j] == 1)
+                spf[j] = i;
+        }
+    }
+}
+
+void calc()
+{
+    cout << "called";
+    f(i, 1, mod)
+    {
+        factors[i].pb(spf[i]);
+
+        ll k = i / spf[i];
+
+        ll j = spf[i];
+
+        while (k > 1)
+        {
+            cout << j << " ";
+            // not already visited
+            if (spf[k] != j)
+                factors[i].pb(j);
+            k /= spf[k];
+        }
+    }
+}
 
 /* DRIVER FUNCTION */
 void solve()
 {
-    ll x;
-    cin >> x;
+    int n, m;
+    cin >> n >> m;
 
-    if (x == 1)
-    {
-        cout << 1 << endl;
-        return;
-    }
+    m = min(n, m);
 
-    if (x == 3)
-    {
-        cout << "169 196 961" << endl;
-        return;
-    }
-    0
+    // calcSpf();
+    calc();
 
-        // no. of zeroes to be added
-        ll z = x - 3;
-    ll cnt = 0;
-    while (cnt != x)
-    {
-        f(i, 1, x)
-        {
-            if (i <= 3)
-                cout <<
-        }
-        cnt++;
-    }
+    // f(i, 1, mod)
+    // {
+    //     // cout << spf[i] << " ";
+    //     for (auto j : factors[i])
+    //         cout << j << " ";
+    // }
+    cout << endl;
+
+    // ll ans = 0;
+    // f(a, 1, n)
+    // {
+    //     f(b, 1, m)
+    //     {
+    //         if ((a + b) % (b * b) == 0)
+    //         {
+    //             ans++;
+    //         }
+    //     }
+    // }
+    // pf(ans);
 }
 
 int main()
@@ -77,7 +127,7 @@ int main()
     cout.tie(0);
     // cout.precision(10);
 
-    ll t = 1;
+    ll t;
     cin >> t;
     while (t--)
     {

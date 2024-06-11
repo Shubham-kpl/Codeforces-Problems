@@ -1,8 +1,11 @@
 /**
+
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
-* Coded on: 10-06-2024 21:05:48
+* The code below is:
+* Coded on : 01/05/2024
 * Coded by: Shubham Kandpal
+
 */
 
 #include <bits/stdc++.h>
@@ -32,56 +35,67 @@ using namespace std;
 #define maxv(a) *max_element(all(a))
 #define minv(a) *min_element(all(a))
 
-#define M 1000001
+#define M 1000001return cmb(n, r) * fact(r);
 
-/* CONSTANTS */
-const ll mod = 1e9 + 7;
+int invCount = 0;
 
-/* DRIVER FUNCTION */
-void solve()
+void merge(vector<int> &nums, int l, int mid, int r)
 {
-    ll x;
-    cin >> x;
+    int i = l, j = mid + 1;
+    int n1 = mid + 1 - l, n2 = r - mid;
 
-    if (x == 1)
-    {
-        cout << 1 << endl;
-        return;
-    }
+    vector<int> arr;
 
-    if (x == 3)
+    while (i <= mid && j <= r)
     {
-        cout << "169 196 961" << endl;
-        return;
-    }
-    0
-
-        // no. of zeroes to be added
-        ll z = x - 3;
-    ll cnt = 0;
-    while (cnt != x)
-    {
-        f(i, 1, x)
+        if (nums[i] <= nums[j])
         {
-            if (i <= 3)
-                cout <<
+            arr.pb(nums[i++]);
         }
-        cnt++;
+        else
+        {
+            arr.pb(nums[j++]);
+            invCount += (n1 - i);
+        }
     }
+
+    while (i <= mid)
+    {
+        arr.pb(nums[i++]);
+    }
+
+    while (j <= r)
+    {
+        arr.pb(nums[j++]);
+    }
+
+    int k = l;
+    for (auto i : arr)
+    {
+        nums[k++] = i;
+    }
+}
+
+void mergeSort(vector<int> &nums, int l, int r)
+{
+    if (l == r)
+        return;
+
+    int mid = (l + r) / 2;
+    mergeSort(nums, l, mid);
+    mergeSort(nums, mid + 1, r);
+    merge(nums, l, mid, r);
 }
 
 int main()
 {
-    ios_base::sync_with_stdio(false);
-    cin.tie(0);
-    cout.tie(0);
-    // cout.precision(10);
+    vector<int> arr = {-2, -4, -1, 9, 1, 2, 3};
+    int n = arr.size();
+    mergeSort(arr, 0, n - 1);
 
-    ll t = 1;
-    cin >> t;
-    while (t--)
-    {
-        solve();
-    }
+    for (auto i : arr)
+        cout << i << " ";
+    cout << endl;
+    cout << invCount << endl;
     return 0;
 }

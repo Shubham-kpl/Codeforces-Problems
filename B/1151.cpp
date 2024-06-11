@@ -1,7 +1,7 @@
 /**
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
-* Coded on: 10-06-2024 21:05:48
+* Coded on: 22-05-2024 23:52:12
 * Coded by: Shubham Kandpal
 */
 
@@ -40,33 +40,51 @@ const ll mod = 1e9 + 7;
 /* DRIVER FUNCTION */
 void solve()
 {
-    ll x;
-    cin >> x;
+    ll n, m;
+    cin >> n >> m;
 
-    if (x == 1)
+    vvi a(n, vi(m));
+    set<ll> st;
+    f(i, 0, n - 1)
     {
-        cout << 1 << endl;
-        return;
-    }
-
-    if (x == 3)
-    {
-        cout << "169 196 961" << endl;
-        return;
-    }
-    0
-
-        // no. of zeroes to be added
-        ll z = x - 3;
-    ll cnt = 0;
-    while (cnt != x)
-    {
-        f(i, 1, x)
+        f(j, 0, m - 1)
         {
-            if (i <= 3)
-                cout <<
+            cin >> a[i][j];
+            st.insert(a[i][j]);
         }
-        cnt++;
+    }
+
+    ll xxor = 0;
+    f(i, 0, n - 1) xxor ^= a[i][0];
+
+    // agar sabke pehle element se hi kaam chal jaae
+    if (xxor > 0)
+    {
+        cout << "TAK" << endl;
+        f(i, 0, n - 1) cout << "1 ";
+    }
+    else
+    {
+        ll idx = -1;
+        f(i, 0, n - 1)
+        {
+            f(j, 0, m - 1)
+            {
+                if (a[i][j] != a[i][0])
+                {
+                    cout << "TAK" << endl;
+                    f(k, 0, n - 1)
+                    {
+                        if (i == k)
+                            cout << j + 1 << " ";
+                        else
+                            cout << 1 << " ";
+                    }
+                    return;
+                }
+            }
+        }
+        cout << "NIE" << endl;
     }
 }
 
@@ -77,11 +95,6 @@ int main()
     cout.tie(0);
     // cout.precision(10);
 
-    ll t = 1;
-    cin >> t;
-    while (t--)
-    {
-        solve();
-    }
+    solve();
     return 0;
 }

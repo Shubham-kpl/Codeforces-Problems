@@ -1,7 +1,7 @@
 /**
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
-* Coded on: 10-06-2024 21:05:48
+* Coded on: 31-05-2024 21:05:06
 * Coded by: Shubham Kandpal
 */
 
@@ -30,44 +30,15 @@ using namespace std;
 #define maxa(a) *max_element(a, a + n)
 #define mina(a) *min_element(a, a + n)
 #define maxv(a) *max_element(all(a))
-#define minv(a) *min_element(all(a))
-
-#define M 1000001
-
-/* CONSTANTS */
-const ll mod = 1e9 + 7;
-
+#define minv(a)
 /* DRIVER FUNCTION */
 void solve()
 {
-    ll x;
-    cin >> x;
+    ll l, r;
+    cin >> l >> r;
 
-    if (x == 1)
-    {
-        cout << 1 << endl;
-        return;
-    }
-
-    if (x == 3)
-    {
-        cout << "169 196 961" << endl;
-        return;
-    }
-    0
-
-        // no. of zeroes to be added
-        ll z = x - 3;
-    ll cnt = 0;
-    while (cnt != x)
-    {
-        f(i, 1, x)
-        {
-            if (i <= 3)
-                cout <<
-        }
-        cnt++;
-    }
+    ll bits = (31 - __builtin_clz(r));
+    cout << bits << endl;
 }
 
 int main()

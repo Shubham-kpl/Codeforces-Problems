@@ -1,7 +1,7 @@
 /**
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
-* Coded on: 10-06-2024 21:05:48
+* Coded on: 08-06-2024 17:53:52
 * Coded by: Shubham Kandpal
 */
 
@@ -10,7 +10,6 @@ using namespace std;
 
 /* MACROS */
 #define ll long long
-#define pb push_back
 #define all(x) x.begin(), x.end()
 #define pf(val) cout << val << endl;
 #define f(i, a, b) for (ll i = a; i <= b; ++i)
@@ -40,34 +39,54 @@ const ll mod = 1e9 + 7;
 /* DRIVER FUNCTION */
 void solve()
 {
-    ll x;
-    cin >> x;
+    ll n;
+    cin >> n;
+    vector<ll> a(n);
+    for (auto &i : a)
+        cin >> i;
 
-    if (x == 1)
+    /**
+     * strategy is to binary searchg on answer (X)
+     *
+     * is X possibl;e ?
+     *
+     * calculate the prefix upto a[0] + 2 * X
+     *
+     * and suffix upto a.back() - 2 * X
+     *
+     * if remaining are in reange 2 * X, answer is valid
+     *
+     * Why 2 * X?
+     *
+     * => for a subsegment, 'ans' will be at exactly mid of it
+     * => so, if x is the difference on one side, x will be on the other => 2*X
+     *
+     * (x and X mean the same)
+     */
+
+    ll l = 0, r = 1e9, mid;
+
+    sort(all(a));
+
+    while (l <= r)
     {
-        cout << 1 << endl;
-        return;
+        mid = l + (r - l) / 2;
+
+        int i = 0;
+        while (i < n && a[i] - a[0] <= 2 * mid)
+            i++;
+
+        int j = n - 1;
+        while (j > 0 && a.back() - a[j] <= 2 * mid)
+            j--;
+
+        if (j < i || a[j] - a[i] <= 2 * mid)
+            r = mid - 1;
+        else
+            l = mid + 1;
     }
 
-    if (x == 3)
-    {
-        cout << "169 196 961" << endl;
-        return;
-    }
-    0
-
-        // no. of zeroes to be added
-        ll z = x - 3;
-    ll cnt = 0;
-    while (cnt != x)
-    {
-        f(i, 1, x)
-        {
-            if (i <= 3)
-                cout <<
-        }
-        cnt++;
-    }
+    cout << l << endl;
 }
 
 int main()

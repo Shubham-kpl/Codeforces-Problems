@@ -1,7 +1,7 @@
 /**
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
-* Coded on: 10-06-2024 21:05:48
+* Coded on: 17-05-2024 10:26:42
 * Coded by: Shubham Kandpal
 */
 
@@ -35,38 +35,51 @@ using namespace std;
 #define M 1000001
 
 /* CONSTANTS */
-const ll mod = 1e9 + 7;
+const ll mod = 1e8;
 
 /* DRIVER FUNCTION */
 void solve()
 {
-    ll x;
-    cin >> x;
-
-    if (x == 1)
+    int n;
+    cin >> n;
+    vi a(n + 1);
+    vi p(n + 1);
+    ll sum = 0;
+    f(i, 1, n)
     {
-        cout << 1 << endl;
-        return;
+        cin >> a[i];
+        p[i] = p[i - 1] + a[i];
+        sum += a[i];
     }
 
-    if (x == 3)
+    ll e = n;
+    vi mp(n + 1);
+    f(i, 1, n)
     {
-        cout << "169 196 961" << endl;
-        return;
+        while (a[i] + a[e] >= mod)
+            e--;
+        mp[i] = e + 1;
     }
-    0
 
-        // no. of zeroes to be added
-        ll z = x - 3;
-    ll cnt = 0;
-    while (cnt != x)
+    ll ans = 0;
+    f(i, 1, n)
     {
-        f(i, 1, x)
+        // value whose mod exists
+        // i.e values ahead of mp[i]
+        if (i < mp[i])
         {
-            if (i <= 3)
-                cout <<
+            if (mp[i] == n + 1)
+            {
+                ans += sum + n * (n - 1) * a[i] / 2;
+            }
         }
-        cnt++;
+        if (i > mp[i])
+        {
+        }
+        else
+        {
+        }
+        // value whose mod DOES NOT exists
     }
 }
 
@@ -77,11 +90,11 @@ int main()
     cout.tie(0);
     // cout.precision(10);
 
-    ll t = 1;
-    cin >> t;
-    while (t--)
-    {
-        solve();
-    }
+    // ll t;
+    // cin >> t;
+    // while (t--)
+    // {
+    solve();
+    // }
     return 0;
 }

@@ -1,7 +1,7 @@
 /**
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
-* Coded on: 10-06-2024 21:05:48
+* Coded on: 04-06-2024 14:45:57
 * Coded by: Shubham Kandpal
 */
 
@@ -40,34 +40,44 @@ const ll mod = 1e9 + 7;
 /* DRIVER FUNCTION */
 void solve()
 {
-    ll x;
-    cin >> x;
+    ll n;
+    cin >> n;
+    vi a(n), b(n);
 
-    if (x == 1)
-    {
-        cout << 1 << endl;
-        return;
-    }
+    ll min1 = INT_MAX, min2 = INT_MAX, max1 = INT_MIN, max2 = INT_MIN;
+    f(i, 0, n - 1) cin >> a[i], min1 = min(min1, a[i]), max1 = max(max1, a[i]);
+    f(i, 0, n - 1) cin >> b[i], min2 = min(min2, b[i]), max2 = max(max2, b[i]);
 
-    if (x == 3)
-    {
-        cout << "169 196 961" << endl;
-        return;
-    }
-    0
+    ll mnmin1 = INT_MAX, mnmin2 = INT_MAX, mxmin1 = INT_MAX, mxmin2 = INT_MAX;
+    ll mnmax1 = INT_MIN, mnmax2 = INT_MIN, mxmax1 = INT_MIN, mxmax2 = INT_MIN;
 
-        // no. of zeroes to be added
-        ll z = x - 3;
-    ll cnt = 0;
-    while (cnt != x)
+    f(i, 0, n - 1)
     {
-        f(i, 1, x)
+        if (a[i] == min1)
         {
-            if (i <= 3)
-                cout <<
+            mxmin1 = max(mxmin1, b[i]), mnmin1 = min(mnmin1, b[i]);
         }
-        cnt++;
+        if (a[i] == max1)
+        {
+            mxmax1 = max(mxmax1, b[i]), mnmax1 = max(mnmax1, b[i]);
+        }
+        if (b[i] == min2)
+        {
+            mxmin2 = max(mxmin2, b[i]), mnmin2 = min(mnmin2, b[i]);
+        }
+        if (b[i] == max2)
+        {
+            mxmax2 = max(mxmax2, b[i]), mnmax2 = max(mnmax2, b[i]);
+        }
     }
+    cout << mxmin1 << mxmin2 << mxmax1 << mxmax2 << endl;
+
+    ll ans1 = max(abs(min1 - mxmin1), abs(min1 - mnmax1));
+    ll ans2 = max(abs(max1 - mxmin1), abs(max1 - mnmax1));
+    ll ans3 = max(abs(min2 - mxmin2), abs(min2 - mnmax2));
+    ll ans4 = max(abs(max2 - mxmin2), abs(max2 - mnmax2));
+
+    cout << max4(ans1, ans2, ans3, ans4) << endl;
 }
 
 int main()

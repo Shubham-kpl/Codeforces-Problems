@@ -1,7 +1,7 @@
 /**
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
-* Coded on: 10-06-2024 21:05:48
+* Coded on: 22-05-2024 08:44:09
 * Coded by: Shubham Kandpal
 */
 
@@ -25,6 +25,7 @@ using namespace std;
 #define ra(a) reverse(a, a + n)
 #define max3(a, b, c) max(a, max(b, c))
 #define min3(a, b, c) min(a, min(b, c));
+
 #define max4(a, b, c, d) max(a, max3(b, c, d))
 #define min4(a, b, c, d) min(a, min3(b, c, d))
 #define maxa(a) *max_element(a, a + n)
@@ -40,34 +41,24 @@ const ll mod = 1e9 + 7;
 /* DRIVER FUNCTION */
 void solve()
 {
-    ll x;
-    cin >> x;
+    ll n, k;
+    cin >> n >> k;
 
-    if (x == 1)
-    {
-        cout << 1 << endl;
-        return;
-    }
+    // just binary represent k and find ans
 
-    if (x == 3)
+    ll ans = 0;
+    ll p = 1;
+    f(i, 0, 30)
     {
-        cout << "169 196 961" << endl;
-        return;
-    }
-    0
-
-        // no. of zeroes to be added
-        ll z = x - 3;
-    ll cnt = 0;
-    while (cnt != x)
-    {
-        f(i, 1, x)
+        // find if ith bit of k is set or not
+        if (((1 << i) & k))
         {
-            if (i <= 3)
-                cout <<
+            ans = (ans + p) % (mod);
         }
-        cnt++;
+
+        p = (p * n) % mod;
     }
+    cout << ans << endl;
 }
 
 int main()
@@ -77,7 +68,7 @@ int main()
     cout.tie(0);
     // cout.precision(10);
 
-    ll t = 1;
+    ll t;
     cin >> t;
     while (t--)
     {

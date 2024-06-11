@@ -33,8 +33,7 @@ void sieve()
 
                 // marking spf[j] if it is not
                 // previously marked
-                if (spf[j] == j)
-                    spf[j] = i;
+                spf[j] = i;
         }
     }
 }
@@ -55,7 +54,7 @@ int main(int argc, char const *argv[])
 {
     // precalculating Smallest Prime Factor
     sieve();
-    int x = 12246;
+    int x = 20;
     cout << "prime factorization for " << x << " : ";
 
     // calling getFactorization function
@@ -64,5 +63,6 @@ int main(int argc, char const *argv[])
     for (int i = 0; i < p.size(); i++)
         cout << p[i] << " ";
     cout << endl;
+
     return 0;
 }

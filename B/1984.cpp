@@ -1,7 +1,7 @@
 /**
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
-* Coded on: 10-06-2024 21:05:48
+* Coded on: 09-06-2024 20:08:41
 * Coded by: Shubham Kandpal
 */
 
@@ -43,31 +43,54 @@ void solve()
     ll x;
     cin >> x;
 
-    if (x == 1)
+    ll a = x / 2 + x % 2, b = x / 2;
+
+    ll n = 0;
+    while (a > 0)
     {
-        cout << 1 << endl;
-        return;
+        n++;
+        a /= 10;
     }
 
-    if (x == 3)
-    {
-        cout << "169 196 961" << endl;
-        return;
-    }
-    0
+    bool chk1 = true, chk2 = true;
 
-        // no. of zeroes to be added
-        ll z = x - 3;
-    ll cnt = 0;
-    while (cnt != x)
+    ll num = 0;
+    f(i, 1, n) num = num * 10 + 5;
+
+    ll d1 = a - num;
+    ll d2 = b - num;
+
+    vi p(n), q(n);
+
+    ll k = 0;
+    while (a > 0)
     {
-        f(i, 1, x)
+        p[k++] = 5 - a % 10;
+        a /= 10;
+    }
+    k = 0;
+    while (b > 0)
+    {
+        q[k++] = 5 - b % 10;
+        b /= 10;
+    }
+
+    bool chk = 1;
+    f(i, 1, n)
+    {
+        if (p[i] < 0 && q[i] < 0)
+            chk = 0;
+        else if (q[i] < 0)
         {
-            if (i <= 3)
-                cout <<
+            if (abs(q[i]) > p[i])
+                chk = 0;
         }
-        cnt++;
+        else if (p[i] < 0)
+            if (abs(p[i]) > q[i])
+                chk = 0;
     }
+    if (chk)
+        pf("YES") else pf("NO")
 }
 
 int main()

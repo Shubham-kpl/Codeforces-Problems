@@ -1,7 +1,7 @@
 /**
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
-* Coded on: 10-06-2024 21:05:48
+* Coded on: 30-05-2024 20:48:55
 * Coded by: Shubham Kandpal
 */
 
@@ -40,33 +40,45 @@ const ll mod = 1e9 + 7;
 /* DRIVER FUNCTION */
 void solve()
 {
-    ll x;
-    cin >> x;
-
-    if (x == 1)
+    ll n;
+    cin >> n;
+    string a;
+    f(i, 0, n - 1) cin >> a[i];
+    ll fl = 0;
+    int i;
+    for (i = 0; i <= n - 2; i++)
     {
-        cout << 1 << endl;
-        return;
-    }
+        if ((a[i] >= 'a' && a[i] <= 'z') || (a[i + 1] >= 'a' && a[i + 1] <= 'z'))
+            break;
 
-    if (x == 3)
-    {
-        cout << "169 196 961" << endl;
-        return;
-    }
-    0
-
-        // no. of zeroes to be added
-        ll z = x - 3;
-    ll cnt = 0;
-    while (cnt != x)
-    {
-        f(i, 1, x)
+        if (a[i] > a[i + 1])
         {
-            if (i <= 3)
-                cout <<
+            fl = 1;
+            break;
         }
-        cnt++;
+    }
+
+    if (fl == 1)
+        cout << "NO" << endl;
+
+    else if (i == n - 2)
+        cout << "YES" << endl;
+
+    else
+    {
+        int j = i;
+        for (j = i; j <= n - 2; j++)
+        {
+            if ((a[i] >= 0 && a[i] <= 9) || ((a[i + 1] >= 0 && a[i + 1] <= 9)) || a[i] > a[i + 1])
+            {
+                fl = 1;
+                break;
+            }
+        }
+        if (fl)
+            cout << "NO" << endl;
+        else
+            cout << "YES" << endl;
     }
 }
 

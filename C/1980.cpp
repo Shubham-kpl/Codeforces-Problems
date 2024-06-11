@@ -1,7 +1,7 @@
 /**
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
-* Coded on: 10-06-2024 21:05:48
+* Coded on: 04-06-2024 11:15:52
 * Coded by: Shubham Kandpal
 */
 
@@ -40,34 +40,71 @@ const ll mod = 1e9 + 7;
 /* DRIVER FUNCTION */
 void solve()
 {
-    ll x;
-    cin >> x;
+    ll n;
+    cin >> n;
 
-    if (x == 1)
+    // all - wo saare jo b mei hai
+    // diff - 'b' ke wo jo 'a' se alag hai
+    // avail - 'd' ke elements
+    map<ll, ll> all, diff, avail;
+
+    vi a(n), b(n);
+    f(i, 0, n - 1) cin >> a[i];
+    f(i, 0, n - 1)
     {
-        cout << 1 << endl;
-        return;
-    }
+        cin >> b[i];
+        all[b[i]]++;
+        if (a[i] != b[i])
+            diff[b[i]]++;
+    };
 
-    if (x == 3)
-    {
-        cout << "169 196 961" << endl;
-        return;
-    }
-    0
+    ll m;
+    cin >> m;
+    vi d(m);
+    f(i, 0, m - 1) cin >> d[i], avail[d[i]]++;
 
-        // no. of zeroes to be added
-        ll z = x - 3;
     ll cnt = 0;
-    while (cnt != x)
+    bool chk = false;
+    for (auto i : b)
     {
-        f(i, 1, x)
+        // kya d ka aakhari wala b mei available hai
+        if (i == d[m - 1])
         {
-            if (i <= 3)
-                cout <<
+            chk = true;
         }
-        cnt++;
+
+        // kya d ka ye element b mei hai bhi!!
+        if (all[i] == 0)
+        {
+            cnt++;
+        }
+
+        // agar jarurat hai to
+        else if (diff[i] > 0)
+        {
+
+            // kahi esa to nhi jitne chahiye utne hai hi nhi
+            if (avail[i] < diff[i])
+            {
+                chk = false;
+                break;
+            }
+
+            // agar mil gya to wo ab tk ke "cnt" (Extra walo) ko khapaa dega
+            else
+            {
+                cnt = 0;
+                diff[i]--;
+                avail[i]--;
+            }
+        }
     }
+    if (cnt || !chk)
+    {
+        cout << "NO" << endl;
+    }
+    else
+        cout << "YES" << endl;
 }
 
 int main()
