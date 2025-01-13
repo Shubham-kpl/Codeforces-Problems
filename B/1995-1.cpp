@@ -1,7 +1,7 @@
 /**
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
-* Coded on: 12-06-2024 10:48:32
+* Coded on: 25-07-2024 10:27:32
 * Coded by: Shubham Kandpal
 */
 
@@ -28,7 +28,7 @@ using namespace std;
 #define max4(a, b, c, d) max(a, max3(b, c, d))
 #define min4(a, b, c, d) min(a, min3(b, c, d))
 #define maxa(a) *max_element(a, a + n)
-#define min a(a) * min_element(a, a + n)
+#define mina(a) *min_element(a, a + n)
 #define maxv(a) *max_element(all(a))
 #define minv(a) *min_element(all(a))
 
@@ -40,16 +40,37 @@ const ll mod = 1e9 + 7;
 /* DRIVER FUNCTION */
 void solve()
 {
-    ll l, r, k;
-    cin >> l >> r >> k;
+    ll n, m;
+    cin >> n >> m;
+    vi a(n);
+    set<ll> st;
+    f(i, 0, n - 1) cin >> a[i], st.insert(a[i]);
 
-    if (k >= 10)
+    map<ll, ll> mp;
+    f(i, 0, n - 1) mp[a[i]]++;
+
+    ll mx = INT_MIN;
+    for (auto i : mp)
     {
-        cout << 0 << endl;
+        ll rem = m - i.first;
+        if (rem < 0)
+            break;
+        ll tmp = i.first;
+        if (st.find(i.first + 1) != st.end())
+        {
+            ll val = (min(mp[i.first + 1], rem / (i.first + 1))) * ((i.first + 1));
+            tmp += val;
+            rem -= val;
+        }
+        if (rem >= i.first)
+        {
+            ll val = (min(mp[i.first] - 1, rem / (i.first))) * ((i.first));
+            tmp += val;
+            rem -= val;
+        }
+        mx = max(mx, tmp);
     }
-    else
-    {
-    }
+    cout << mx << endl;
 }
 
 int main()

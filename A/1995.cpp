@@ -1,7 +1,7 @@
 /**
 * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
 
-* Coded on: 12-06-2024 10:48:32
+* Coded on: 25-07-2024 10:02:24
 * Coded by: Shubham Kandpal
 */
 
@@ -28,7 +28,7 @@ using namespace std;
 #define max4(a, b, c, d) max(a, max3(b, c, d))
 #define min4(a, b, c, d) min(a, min3(b, c, d))
 #define maxa(a) *max_element(a, a + n)
-#define min a(a) * min_element(a, a + n)
+#define mina(a) *min_element(a, a + n)
 #define maxv(a) *max_element(all(a))
 #define minv(a) *min_element(all(a))
 
@@ -40,16 +40,14 @@ const ll mod = 1e9 + 7;
 /* DRIVER FUNCTION */
 void solve()
 {
-    ll l, r, k;
-    cin >> l >> r >> k;
+    int n, k, b, c;
+    cin >> n >> k;
 
-    if (k >= 10)
-    {
-        cout << 0 << endl;
-    }
-    else
-    {
-    }
+    b = -(1 + 2 * n);
+    c = k + n;
+
+    int val = -b - pow(b * b - 4 * c, 0.5);
+    cout << val / 2 << endl;
 }
 
 int main()

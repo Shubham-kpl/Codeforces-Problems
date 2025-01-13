@@ -1,9 +1,8 @@
 /**
-* कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
-
-* Coded on: 12-06-2024 10:48:32
-* Coded by: Shubham Kandpal
-*/
+ * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
+ * Coded on: 12-01-2025 20:09:19
+ * Coded by: Shubham Kandpal
+ */
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -28,10 +27,9 @@ using namespace std;
 #define max4(a, b, c, d) max(a, max3(b, c, d))
 #define min4(a, b, c, d) min(a, min3(b, c, d))
 #define maxa(a) *max_element(a, a + n)
-#define min a(a) * min_element(a, a + n)
+#define mina(a) *min_element(a, a + n)
 #define maxv(a) *max_element(all(a))
 #define minv(a) *min_element(all(a))
-
 #define M 1000001
 
 /* CONSTANTS */
@@ -40,16 +38,10 @@ const ll mod = 1e9 + 7;
 /* DRIVER FUNCTION */
 void solve()
 {
-    ll l, r, k;
-    cin >> l >> r >> k;
-
-    if (k >= 10)
-    {
-        cout << 0 << endl;
-    }
-    else
-    {
-    }
+    int n, a, b;
+    cin >> n >> a >> b;
+    if (abs(a - b) % 2 == 0)
+        pf("Yes") else pf("No")
 }
 
 int main()
