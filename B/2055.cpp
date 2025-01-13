@@ -1,9 +1,8 @@
 /**
-* कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
-
-* Coded on: 25-07-2024 10:27:32
-* Coded by: Shubham Kandpal
-*/
+ * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
+ * Coded on: 12-01-2025 20:17:44
+ * Coded by: Shubham Kandpal
+ */
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -31,7 +30,6 @@ using namespace std;
 #define mina(a) *min_element(a, a + n)
 #define maxv(a) *max_element(all(a))
 #define minv(a) *min_element(all(a))
-
 #define M 1000001
 
 /* CONSTANTS */
@@ -40,37 +38,38 @@ const ll mod = 1e9 + 7;
 /* DRIVER FUNCTION */
 void solve()
 {
-    ll n, m;
-    cin >> n >> m;
-    vi a(n);
-    set<ll> st;
-    f(i, 0, n - 1) cin >> a[i], st.insert(a[i]);
+    int n;
+    cin >> n;
+    vi a(n), b(n);
+    f(i, 0, n - 1) cin >> a[i];
+    f(i, 0, n - 1) cin >> b[i];
 
-    map<ll, ll> mp;
-    f(i, 0, n - 1) mp[a[i]]++;
-
-    ll mx = INT_MIN;
-    for (auto i : mp)
+    f(i, 0, n - 1)
     {
-        ll rem = m - i.first;
-        if (rem < 0)
-            break;
-        ll tmp = i.first;
-        if (st.find(i.first + 1) != st.end())
+        if (a[i] < b[i])
         {
-            ll val = (min(mp[i.first + 1], rem / (i.first + 1))) * ((i.first + 1));
-            tmp += val;
-            rem -= val;
+            f(j, 0, n - 1)
+            {
+                if (i != j)
+                {
+                    if (a[j] > b[j])
+                    {
+                        if (a[j] - b[j] < b[i] - a[i])
+                        {
+                            cout << "NO" << endl;
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        cout << "NO" << endl;
+                        return;
+                    }
+                }
+            }
         }
-        if (rem >= i.first)
-        {
-            ll val = (min(mp[i.first] - 1, rem / (i.first))) * ((i.first));
-            tmp += val;
-            rem -= val;
-        }
-        mx = max(mx, tmp);
     }
-    cout << mx << endl;
+    cout << "YES" << endl;
 }
 
 int main()

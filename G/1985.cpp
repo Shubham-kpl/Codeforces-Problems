@@ -28,7 +28,7 @@ using namespace std;
 #define max4(a, b, c, d) max(a, max3(b, c, d))
 #define min4(a, b, c, d) min(a, min3(b, c, d))
 #define maxa(a) *max_element(a, a + n)
-#define min a(a) * min_element(a, a + n)
+#define mina(a) *min_element(a, a + n)
 #define maxv(a) *max_element(all(a))
 #define minv(a) *min_element(all(a))
 
@@ -49,7 +49,7 @@ void solve()
     }
     else
     {
-    }
+        }
 }
 
 int main()

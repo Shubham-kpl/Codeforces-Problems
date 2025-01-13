@@ -1,9 +1,8 @@
 /**
-* कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
-
-* Coded on: 22-08-2024 19:10:39
-* Coded by: Shubham Kandpal
-*/
+ * कर्मण्येवाधिकारस्ते मा फलेषु कदाचन, मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥ *
+ * Coded on: 12-01-2025 20:38:19
+ * Coded by: Shubham Kandpal
+ */
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -31,7 +30,6 @@ using namespace std;
 #define mina(a) *min_element(a, a + n)
 #define maxv(a) *max_element(all(a))
 #define minv(a) *min_element(all(a))
-
 #define M 1000001
 
 /* CONSTANTS */
@@ -40,22 +38,52 @@ const ll mod = 1e9 + 7;
 /* DRIVER FUNCTION */
 void solve()
 {
-    int n;
-    cin >> n;
-    vi a(n);
-    f(i, 0, n - 1) cin >> a[i];
+    int n, m;
+    cin >> n >> m;
 
-    map<int, int> mp;
-    for (auto i : a)
-        mp[i]++;
+    string p;
+    cin >> p;
 
-    int mx = 0;
-    for (auto i : mp)
+    // input terrain
+    vvi trn(n, vi(m));
+    f(i, 0, n - 1)
     {
-        mx = max(mx, i.second);
+        f(j, 0, m - 1) cin >> trn[i][j];
     }
 
-    cout << n - mx << endl;
+    // this #cell belongs to #path
+    vi cell = {0, 0};
+    for (auto i : p)
+    {
+        ll sm = 0;
+        ll x = cell[0], y = cell[1];
+        if (i == 'D')
+        {
+            f(j, 0, m - 1)
+                sm += trn[x][j];
+            cell[0] += 1;
+        }
+        else
+        {
+            f(j, 0, n - 1)
+                sm += trn[j][y];
+            cell[1] += 1;
+        }
+        trn[x][y] = -sm;
+    }
+
+    // This one for the last cell babe...
+    f(j, 0, m - 2)
+        trn[n - 1][m - 1] += -trn[n - 1][j];
+
+    for (auto i : trn)
+    {
+        for (auto j : i)
+        {
+            cout << j << " ";
+        }
+        cout << endl;
+    }
 }
 
 int main()
